@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script defer src="main.js"></script>
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Daisy UI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="mockup-phone">
+      <div class="camera"></div>
+      <div class="display">
+        <!-- flexbox  -->
+        <div class="artboard artboard-demo phone-1">
+          <!-- empty area  -->
+          <div class="area" style="margin-top: 0px; margin-bottom: 0px">
+            <!-- <div>7:33</div> -->
+            <div id="current-time"></div>
+            <div>⑉ 4G</div>
+          </div>
+
+          <!-- head -->
+          <div class="head">Shopping List</div>
+          <!-- main -->
+          <div class="main">
+            <div class="main_title">🌟 현재 추가된 항목</div>
+            <ul class="item_list"></ul>
+          </div>
+          <!-- footer  -->
+          <div class="foot">
+            <div class="foot_input_area">
+              <input type="text" class="foot_input" placeholder="추가할 제품을 입력하세요" />
+              <button class="foot_input_btn">✈︎</button>
+            </div>
+            <div class="foot_area">
+              <div class="line"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
