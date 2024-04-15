@@ -13,12 +13,12 @@ let musicIndex = 0;
 const audio = document.querySelector('audio');
 const audioSrc = document.getElementById('audio_src');
 
-const playerBtnPlay = document.getElementById('player_btn_play');
-const playerBtnPrev = document.getElementById('player_btn_prev');
-const playerBtnNext = document.getElementById('player_btn_next');
+const audioBtnPlay = document.getElementById('audio_player_controller_play');
+const audioBtnPrev = document.getElementById('audio_player_controller_prev');
+const audioBtnNext = document.getElementById('audio_player_controller_next');
 
-const playerInfoImage = document.getElementById('player_info_image');
-const playerTextTitle = document.getElementById('player_text_title');
+const audioImage = document.getElementById('audio_player_image');
+const audioTitle = document.querySelector('.audio_player_title');
 
 function loadMusic() {
   console.log('load music ', musicIndex);
@@ -27,31 +27,23 @@ function loadMusic() {
 }
 
 function onMusicLoaded() {
-  let title = musicsSrcs[musicIndex].split('/')[1].split('.')[0];
+  const title = musicsSrcs[musicIndex].split('/')[1].split('.')[0];
 
-  if (title.length > 6) {
-    title = title.substring(0, 6) + '..';
-  }
-
-  playerTextTitle.innerText = title;
-  playerInfoImage.style.backgroundImage = `url(${musicImgSrcs[musicIndex]})`;
+  audioTitle.innerText = title;
+  audioImage.src = musicImgSrcs[musicIndex];
   console.log('music loaded ', title);
   playMusic();
 }
 
 function playMusic() {
   console.log('music played');
-  playerInfoImage.style.animation = `spin 4s linear infinite`;
-  playerBtnPlay.innerHTML = `<img src="image/btn_pause.png"/>`;
-  playerBtnPlay.style.width = "40px";
-  playerBtnPlay.style.height = "40px";
-  playerBtnPlay.style.marginTop = '5px';
+  audioImage.style.animation = `spin 4s linear infinite`;
   audio.play();
 }
 function pauseMusic() {
   console.log('music paused');
-  playerInfoImage.style.animation = `none`;
-  playerBtnPlay.innerHTML = `<img src="image/btn_play.png"/>`;
+  audioImage.style.animation = `none`;
+  audioBtnPlay.innerHTML = `<img src="image/btn_play.png"/>`;
   audio.pause();
 }
 
@@ -76,9 +68,9 @@ function onNextButtonClicked() {
 
 function addEventListeners() {
   audio.addEventListener("loadeddata", () => onMusicLoaded());
-  playerBtnPlay.addEventListener('click', () => onPlayButtonClicked());
-  playerBtnPrev.addEventListener('click', () => onPrevButtonClicked());
-  playerBtnNext.addEventListener('click', () => onNextButtonClicked());
+  audioBtnPlay.addEventListener('click', () => onPlayButtonClicked());
+  audioBtnPrev.addEventListener('click', () => onPrevButtonClicked());
+  audioBtnNext.addEventListener('click', () => onNextButtonClicked());
 }
 
 //main
