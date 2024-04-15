@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    
+        <script defer src="main.js"></script>
+        <link rel="stylesheet" href="style.css" />
+    
+        <!-- Daisy UI -->
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.tailwindcss.com"></script>
+      </head>
+
+<body>
+    <div class="player">
+        <audio>
+            <source id="audio_src" src="" type="audio/mpeg">
+        </audio>
+
+        <div class="player_info">
+            <div id="player_info_image">
+            </div>
+
+            <div class="player_info_text">
+                <p id="player_text_title">TITLE</p>
+            </div>
+        </div>
+
+        <div class="player_controller">
+            <button id="player_btn_prev" class="player_btn">
+                <img src="image/btn_prev.png"/>
+            </button>
+            <button id="player_btn_play" class="player_btn">
+                <img src="image/btn_play.png"/>
+            </button>
+            <button id="player_btn_next" class="player_btn">
+                <img src="image/btn_next.png"/>
+            </button>
+        </div>
+    </div>
+</body>
+</html>

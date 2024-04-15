@@ -1,0 +1,75 @@
+.player {
+    width: 250px;
+    height: 100px;
+
+    border: 3px solid black;
+
+    margin: 5px;
+    padding: 10px;
+
+    color: black;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    transition: height 0.5s;
+    overflow: hidden;
+}
+
+.player:hover {
+    height: 250px;
+}
+.player:hover .player_info {
+    flex-direction: column;
+    align-items: center;
+}
+.player:hover #player_info_progress {
+    width: 200px;
+}
+.player:hover #player_info_image {
+    width: 100px;
+    height: 100px;
+}
+.player:hover .player_controller {
+    opacity: 1;
+}
+.player:hover .player_info_text {
+    margin-top: 20px;
+}
+
+.player_info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.player_info_text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    font-weight: bolder;
+    font-size: 30px;
+}
+#player_info_image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.player_controller {
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+.player_btn {
+    height: 30px;
+    width: 30px;
+    margin: 10px;
+}
