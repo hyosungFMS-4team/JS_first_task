@@ -40,11 +40,8 @@
 }
 
 body {
-  background: #dce3e6;
   height: 100dvh;
   overflow: hidden;
-  background-image: url(image/pixel-city-thumb.jpg);
-  backdrop-filter: blur(3px);
   user-select: none;
   margin: 0px;
   padding: 10px;
@@ -241,7 +238,7 @@ body {
 .back_pointer {
   position: absolute;
   top: 10px;
-  left: 10px;
+  left: 20px;
   width: 80px;
   height: 80px;
   transition: all 300ms ease-in;
@@ -320,4 +317,22 @@ body {
   100% {
     transform: translateX(-3px);
   }
+}
+
+/* background */
+
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.bg-video__content {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: blur(2px);
 }
