@@ -54,6 +54,10 @@ body * {
     display: flex;
     opacity: 1;
 }
+.player:hover #player_info_center {
+    width: 10px;
+    height: 10px;
+}
 
 .player_info {
     display: flex;
@@ -100,13 +104,13 @@ body * {
 }
 
 #player_info_center {
-    width: 10px;
-    height: 10px;
+    width: 5px;
+    height: 5px;
     background-color: black;
     border-radius: 50%;
     position: relative;
-    left: 2.5%;
-    top: 2.5%;
+    left: 2.3%;
+    top: 2.3%;
 }
 
 .player_controller {
