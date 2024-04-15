@@ -15,6 +15,30 @@
   }
 }
 
+@keyframes backPointerAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes dragAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 body {
   background: #dce3e6;
   height: 100dvh;
@@ -48,6 +72,7 @@ body {
   box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36;
   cursor: pointer;
   animation: jumpAnimation 4s infinite;
+  /* animation: dragAnimation 0.15s infinite; */
 }
 .item_btn:active {
   transform: translateY(5px);
@@ -81,6 +106,7 @@ body {
 
 .quiz_items {
   flex: 4.5;
+  width: 95%;
 }
 
 /* OX_section */
@@ -205,4 +231,20 @@ body {
   100% {
     background-position-y: -48rem;
   }
+}
+
+/* back-pointer */
+.back_pointer {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 80px;
+  height: 80px;
+  transition: all 300ms ease-in;
+}
+
+.back_pointer:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  animation: backPointerAnimation 0.8s infinite;
 }
