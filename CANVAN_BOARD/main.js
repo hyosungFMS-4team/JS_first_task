@@ -1,10 +1,8 @@
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-// task 먼저 넣어주고 => 들어가있는 id 값들 저장해놨다가 걔네들만 빼고 quiz_items에 남은 애들 넣어주면 될듯?
-
 // ================================================================================================
-// OX 항목들 최초에 넣어주기
 
+//dummy
 const OXItems = [
   { id: '1', text: '제 이름은 윤동훈입니다.' },
   { id: '2', text: '저는 1996년생입니다', backgroundColor: '#d83434' },
@@ -18,41 +16,40 @@ const OXItems = [
   { id: '10', text: 'Click at me', backgroundColor: '#009688' },
 ];
 
-OXItems.forEach(buttonInfo => {
-  const button = document.createElement('button');
-  button.id = buttonInfo.id;
-  button.textContent = buttonInfo.text;
-  button.className = 'item_btn';
-  button.draggable = true;
-  if (buttonInfo.backgroundColor) {
-    button.style.backgroundColor = buttonInfo.backgroundColor;
-  }
-
-  document.querySelector('.quiz_items').appendChild(button);
-});
-
 // ================================================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-  //   renderTasks();
+  renderTasks();
 });
 
-// function renderTasks() {
-//   const columns = ['quiz_items', 'o_section', 'x_section'];
+function renderTasks() {
+  if (!tasks.length) {
+    OXItems.forEach(item => {
+      const newTask = {
+        id: item.id,
+        content: item.text,
+        backgroundColor: item.backgroundColor,
+        status: 'quiz_items',
+      };
+      tasks.push(newTask);
+    });
+  }
 
-//   columns.forEach(columnId => {
-//     const column = document.getElementById(columnId);
-//     // column.querySelector('.task-container').innerHTML = '';
-//     column.innerHTML = '';
+  const columns = ['quiz_items', 'o_section', 'x_section'];
 
-//     tasks.forEach(task => {
-//       if (task.status === columnId) {
-//         const taskElement = createTaskElement(task.content, task.id);
-//         column.querySelector('.task-container').appendChild(taskElement);
-//       }
-//     });
-//   });
-// }
+  columns.forEach(columnId => {
+    const column = document.querySelector(`.${columnId}`);
+    column.innerHTML = '';
+
+    tasks.forEach(task => {
+      if (task.status === columnId) {
+        const taskElement = createTaskElement(task.content, task.id, task.backgroundColor);
+        taskElement.addEventListener('dragstart', drag);
+        column.appendChild(taskElement);
+      }
+    });
+  });
+}
 
 // item_btn 이라는 클래스를 가지는 요소를 전부 가져와서
 const itemBtnList = document.querySelectorAll('.item_btn');
@@ -65,6 +62,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function drag(event) {
+  console.log(event.target);
   event.dataTransfer.setData('text/plain', event.target.id);
 }
 
@@ -76,17 +74,49 @@ function allowDrop(event) {
 //
 function drop(event, columnId) {
   event.preventDefault();
+  console.log(columnId);
   const data = event.dataTransfer.getData('text/plain');
+  console.log(data);
   const draggedElement = document.getElementById(data);
-  if (draggedElement) {
-    // const taskStatus = columnId;
-    // updateTaskStatus(data, taskStatus);
 
+  const taskStatus = columnId;
+  if (draggedElement) {
     // 이벤트 발생 타겟이 button 이면 button의 부모태그에 append => 이거 안해주면 버튼안에 버튼 들어감
     if (event.target.tagName === 'BUTTON') {
+      updateTaskStatus(data, taskStatus);
       event.target.parentNode.appendChild(draggedElement);
       return;
     }
+    updateTaskStatus(data, taskStatus);
     event.target.appendChild(draggedElement);
   }
+}
+
+// FIXME:
+function updateTaskStatus(taskId, newStatus) {
+  tasks = tasks.map(task => {
+    if (task.id === taskId) {
+      return { ...task, status: newStatus };
+    }
+    return task;
+  });
+  updateLocalStorage();
+}
+
+//   FIXME:
+function updateLocalStorage() {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function createTaskElement(content, id, backgroundColor) {
+  const button = document.createElement('button');
+  button.id = id;
+  button.textContent = content;
+  button.className = 'item_btn';
+  button.draggable = true;
+  if (backgroundColor) {
+    button.style.backgroundColor = backgroundColor;
+  }
+
+  return button;
 }
