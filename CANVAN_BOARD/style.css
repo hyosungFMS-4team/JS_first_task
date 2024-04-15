@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'PIXEL'; /* 폰트 패밀리 이름 설정 */
-  src: url('font/NeoDunggeunmoPro-Regular.ttf') format('truetype'); /* 폰트 파일 경로 설정 */
+  font-family: 'PIXEL';
+  src: url('font/NeoDunggeunmoPro-Regular.ttf') format('truetype');
 }
 
 @keyframes jumpAnimation {
@@ -8,7 +8,7 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px); /* 이미지가 위로 20px 이동 */
+    transform: translateY(-10px);
   }
   100% {
     transform: translateY(0);
@@ -20,8 +20,8 @@ body {
   height: 100dvh;
   overflow: hidden;
   background-image: url(image/pixel-city-thumb.jpg);
-  /* background-image: url(image/sunless-city-korea-thumb.jpg); */
   backdrop-filter: blur(3px);
+  user-select: none;
 }
 
 .container {
@@ -114,6 +114,10 @@ body {
   box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36;
 }
 
+.o_drop_main > button {
+  animation: none;
+}
+
 .area {
   flex: 0.2;
 }
@@ -139,6 +143,10 @@ body {
   flex: 8.7;
   border: 0;
   box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36;
+}
+
+.x_drop_main > button {
+  animation: none;
 }
 
 /* footer  */
