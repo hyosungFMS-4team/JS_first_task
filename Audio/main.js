@@ -35,11 +35,13 @@ function onMusicLoaded() {
 
 function playMusic() {
   console.log('music played');
-  playerBtnPlay.innerHTML = `<img src="image/btn_pause.png"/>`;
+  playerInfoImage.style.animation = `spin 4s linear infinite`;
+  playerBtnPlay.innerHTML = `<img src="image/btn_pause.png" width="60px" heigth="60px"/>`;
   audio.play();
 }
 function pauseMusic() {
   console.log('music paused');
+  playerInfoImage.style.animation = `none`;
   playerBtnPlay.innerHTML = `<img src="image/btn_play.png"/>`;
   audio.pause();
 }

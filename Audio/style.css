@@ -1,14 +1,25 @@
+@font-face {
+    font-family: 'PIXEL';
+    src: url('../CANVAN_BOARD/font/NeoDunggeunmoPro-Regular.ttf') format('truetype');
+}
+
+body * {
+    font-family: 'PIXEL';
+}
+
 .player {
     width: 250px;
     height: 100px;
 
-    border: 3px solid black;
+    border: 0;
+    box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36;
 
     margin: 5px;
     padding: 10px;
 
     color: black;
-    opacity: 0.8;
+    background-color: beige;
+    opacity: 0.7;
 
     display: flex;
     flex-direction: column;
@@ -21,20 +32,25 @@
 .player:hover {
     height: 250px;
 }
+
 .player:hover .player_info {
     flex-direction: column;
     align-items: center;
 }
+
 .player:hover #player_info_progress {
     width: 200px;
 }
+
 .player:hover #player_info_image {
     width: 100px;
     height: 100px;
 }
+
 .player:hover .player_controller {
     opacity: 1;
 }
+
 .player:hover .player_info_text {
     margin-top: 20px;
 }
@@ -44,14 +60,17 @@
     align-items: center;
     justify-content: space-between;
 }
+
 .player_info_text {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: auto;
     font-weight: bolder;
+    text-decoration: underline;
     font-size: 30px;
 }
+
 #player_info_image {
     display: flex;
     justify-content: center;
@@ -59,8 +78,19 @@
 
     width: 75px;
     height: 75px;
+
+    border: 0;
+    box-shadow: 0px 5px silver, 0px -5px silver, 5px 0px silver, -5px 0px silver, 0px 10px yellow, 5px 5px yellow, -5px 5px yellow, inset 0px 5px yellow;
     border-radius: 50%;
     background-color: black;
+
+    animation: spin 4s linear infinite;
+}
+@keyframes spin { 
+    100% { 
+        -webkit-transform: rotate(360deg); 
+        transform:rotate(360deg); 
+    } 
 }
 
 .player_controller {
@@ -69,6 +99,7 @@
     opacity: 0;
     transition: opacity 0.5s ease-out;
 }
+
 .player_btn {
     height: 30px;
     width: 30px;
