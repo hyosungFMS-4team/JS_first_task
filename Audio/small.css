@@ -1,0 +1,123 @@
+@font-face {
+    font-family: 'PIXEL';
+    src: url('../CANVAN_BOARD/font/NeoDunggeunmoPro-Regular.ttf') format('truetype');
+}
+
+body * {
+    font-family: 'PIXEL';
+}
+
+.player {
+    width: 62px;
+    height: 62px;
+
+    border: 0;
+    box-shadow: 0px 3px black, 0px -3px black, 3px 0px black, -3px 0px black, 0px 5px #00000038, 3px 3px #00000038, -3px 3px #00000038, inset 0px 3px #ffffff36;
+
+    margin: 5px;
+
+    color: black;
+    background-color: red;
+    opacity: 0.7;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    transition: height 0.5s;
+    transition: width 0.5s;
+    overflow: hidden;
+}
+
+.player:hover {
+    height: 250px;
+    width: 250px;
+}
+
+.player:hover .player_info {
+    flex-direction: column;
+    align-items: center;
+}
+
+.player:hover #player_info_image {
+    width: 100px;
+    height: 100px;
+}
+
+.player:hover .player_controller {
+    opacity: 1;
+    display: flex;
+}
+
+.player:hover .player_info_text {
+    margin-top: 20px;
+    display: flex;
+    opacity: 1;
+}
+
+.player_info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.player_info_text {
+    display: none;
+    opacity: 0;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    font-weight: bolder;
+    text-decoration: underline;
+    font-size: 30px;
+    transition: opacity 0.5s;
+}
+
+#player_info_image {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 50px;
+    height: 50px;
+    /* width: 100%; */
+    /* height: 100%; */
+
+    border: 0;
+    box-shadow: 0px 2px silver, 0px -2px silver, 2px 0px silver, -2px 0px silver, 0px 3px black, 3px 3px black, -3px 3px black, inset 0px 3px black;
+    border-radius: 50%;
+    background-color: black;
+
+    animation: spin 4s linear infinite;
+}
+@keyframes spin { 
+    100% { 
+        -webkit-transform: rotate(360deg); 
+        transform:rotate(360deg); 
+    } 
+}
+
+#player_info_center {
+    width: 12px;
+    height: 12px;
+    background-color: black;
+    border-radius: 50%;
+    position: relative;
+    left: 3%;
+    top: 3%;
+}
+
+.player_controller {
+    display: none;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+.player_btn {
+    height: 30px;
+    width: 30px;
+    margin: 10px;
+}
