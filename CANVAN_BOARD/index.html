@@ -9,6 +9,12 @@
     <script defer src="main.js"></script>
   </head>
   <body>
+    <div class="bg-video">
+      <video class="bg-video__content" autoplay muted loop>
+        <source src="image/OX_background.mp4" type="video/mp4" />
+      </video>
+    </div>
+
     <div class="container">
       <section class="header">
         <h1 class="title">
@@ -39,7 +45,7 @@
       </section>
 
       <!-- 뒤로가기 -->
-      <img class="back_pointer" src="image/pointer.png" alt="" />
+      <img class="back_pointer" src="image/pointer.png" alt="" onclick="goToTestPage()" />
 
       <!-- 모달 -->
       <div id="myModal" class="modal">

@@ -226,3 +226,9 @@ window.onclick = function (event) {
     modal.style.display = 'none';
   }
 };
+
+// 페이지 이동
+
+function goToTestPage() {
+  window.location.href = 'test.html';
+}

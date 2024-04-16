@@ -40,11 +40,13 @@
 }
 
 body {
-  background: #dce3e6;
+  /* background: #dce3e6; */
   height: 100dvh;
   overflow: hidden;
-  background-image: url(image/pixel-city-thumb.jpg);
-  backdrop-filter: blur(3px);
+
+  /* background-image: url(image/pixel-city-thumb.jpg); */
+
+  backdrop-filter: blur(4px);
   user-select: none;
   margin: 0px;
   padding: 10px;
@@ -320,4 +322,22 @@ body {
   100% {
     transform: translateX(-3px);
   }
+}
+
+/* background */
+
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.bg-video__content {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: blur(2px);
 }
