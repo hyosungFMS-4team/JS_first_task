@@ -17,7 +17,7 @@ async function appendMapCarouselItem(title, swapOnColor, swapOffColor) {
         <div class="w-1/2 flex items-center justify-center">
             <div class="text-[300px] text-gray-950">O</div>
             <div class="mapContainer">
-                 <div id="map" style="width: 100%; height: 400px"></div>
+                 <div id="map2" style="width: 100%; height: 400px"></div>
              </div>
         </div>
         <div class="w-1/2 flex justify-center items-center">
@@ -153,7 +153,7 @@ function makeMarkersToMap(map, coords) {
     const customOverlay = new kakao.maps.CustomOverlay({
       map: map,
       position: point,
-      content: content,
+      content: 'mola',
       yAnchor: 2.7,
     });
     customOverlay.setMap(map);

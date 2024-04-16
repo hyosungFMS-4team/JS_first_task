@@ -1,0 +1,41 @@
+#wrap {
+    margin: auto;
+
+    width: 500px;
+    height: 500px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    border: 3px solid red;
+}
+
+.swap-container {
+    width: 300px;
+    height: 300px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 3px solid blue;
+}
+
+.map_container {
+    margin: auto;
+    width: 80%;
+    height: 80%;
+
+    border: 3px solid black;
+}
+
+.custom-overlay {
+    background: #2e2e2e;
+    padding: 11px;
+    color: #fff;
+  
+    font-size: 20px;
+    box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
+      inset 0px -5px #00000030;
+  }
