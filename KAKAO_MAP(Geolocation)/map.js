@@ -1,9 +1,3 @@
-const swapCheckBox = document.getElementById('swap-checkbox');
-swapCheckBox.onclick = (e) => {
-    console.log('clicked');
-    e.preventDefault();
-};
-
 // MAIN
 (async () => {
     // 좌표
@@ -18,25 +12,25 @@ swapCheckBox.onclick = (e) => {
     const mapContainer = document.getElementById('map');
     const map = loadKakaoMap(mapContainer, curCoord.latitude, curCoord.longtitude);
 
-    // 좌표 마커로 지도에 추가
-    makeMarkersToMap(map, coords, makeOverlayContents('출발', '도착'));
+
 
     // 경로 생성 및 지도에 추가
     const carDirection = await getCarDirection(curCoord, destCoord);
     console.log(carDirection);
     makePathLineToMap(map, carDirection);
 
+        // 좌표 마커로 지도에 추가
+        makeMarkersToMap(map, coords, makeOverlayContents('출발', '도착'));
+
     const directionSummary = carDirection.routes[0].summary;
     const directionFare = directionSummary.fare;
 
-//     const mapInfo = document.getElementById('mapInfo');
-//     mapInfo.innerHTML = `
-//     TAXI: ${directionFare.taxi} <br>
-//     TOLL: ${directionFare.toll} <br>
+    const mapInfo = document.getElementById('mapInfo');
+    console.log(`
+    TAXI: ${directionFare.taxi} <br>
+    TOLL: ${directionFare.toll} <br>
 
-//     DIST: ${directionSummary.distance}
-// `;
-
+    DIST: ${directionSummary.distance}`);
 
 
 })();
@@ -92,6 +86,26 @@ function makeMarkersToMap(map, coords, overlayContents) {
         });
         customOverlay.setMap(map);
     }
+
+        // animation
+
+        const position = new kakao.maps.LatLng(coords[0].latitude, coords[0].longtitude);
+        const path = document.getElementById('daum-maps-shape-0');
+        console.log(path.getAttribute('d'));
+        const customOverlay = new kakao.maps.CustomOverlay({
+            map: map,
+            position: position, //todo marker position
+            content: `
+            <div id="motion-demo"
+                style="offset-path: path('${path.getAttribute('d')}'); animation: move 3000ms infinite alternate ease-in-out;
+                width: 40px;
+                height: 40px;
+                background: red;"
+            ></div>`,
+            yAnchor: 2.7,
+        });
+        customOverlay.setMap(map);
+        mapBounds.extend(position);
 
     map.setBounds(mapBounds);
 }
