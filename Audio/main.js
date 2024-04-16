@@ -1,11 +1,12 @@
 // 개인별 음악, 사진 목록 위치 지정
 const musicsSrcs = [
   'audio/first.mp3',
-  'audio/second.mp3'
+  'audio/second.mp3',
+  'audio/thirdlonglonglong.mp3'
 ];
 const musicImgSrcs = [
   'image/first.jpg',
-  'image/second.jpg'
+  'image/second.png'
 ]
 let musicIndex = 0;
 
@@ -26,7 +27,12 @@ function loadMusic() {
 }
 
 function onMusicLoaded() {
-  const title = musicsSrcs[musicIndex].split('/')[1].split('.')[0];
+  let title = musicsSrcs[musicIndex].split('/')[1].split('.')[0];
+
+  if (title.length > 6) {
+    title = title.substring(0, 6) + '..';
+  }
+
   playerTextTitle.innerText = title;
   playerInfoImage.style.backgroundImage = `url(${musicImgSrcs[musicIndex]})`;
   console.log('music loaded ', title);
@@ -35,11 +41,16 @@ function onMusicLoaded() {
 
 function playMusic() {
   console.log('music played');
+  playerInfoImage.style.animation = `spin 4s linear infinite`;
   playerBtnPlay.innerHTML = `<img src="image/btn_pause.png"/>`;
+  playerBtnPlay.style.width = "40px";
+  playerBtnPlay.style.height = "40px";
+  playerBtnPlay.style.marginTop = '5px';
   audio.play();
 }
 function pauseMusic() {
   console.log('music paused');
+  playerInfoImage.style.animation = `none`;
   playerBtnPlay.innerHTML = `<img src="image/btn_play.png"/>`;
   audio.pause();
 }
