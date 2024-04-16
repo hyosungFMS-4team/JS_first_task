@@ -72,10 +72,30 @@ header > h1 {
   font-size: 5vw;
   color: silver;
 }
+.card-body.back {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .card-title {
   font-size: 5vw;
   line-height: 1;
+}
+.card-body.back.card-title {
+    flex: 1;
+}
+.card-content {
+    flex: 5;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid black;
+
+    font-size: 6vw;
 }
 
 .flip {
@@ -88,9 +108,6 @@ header > h1 {
 
 .flip > div {
   backface-visibility: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .flip .back {
