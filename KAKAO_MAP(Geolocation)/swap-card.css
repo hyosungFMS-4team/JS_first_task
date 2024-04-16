@@ -6,6 +6,7 @@
 header {
   height: 15%;
   margin-bottom: 10px;
+  margin-top: 20px;
 }
 
 /* colors */
@@ -37,7 +38,7 @@ header {
 
 header > h1 {
   background: #2e2e2e;
-  padding: 5vh;
+  padding: 3vh;
   color: #fff;
   letter-spacing: 0.5vh;
   font-size: 4vh;
@@ -45,7 +46,12 @@ header > h1 {
     inset 0px -5px #00000030;
 }
 
-#carousel {
+/* #carousel {
+  height: 80%;
+  overflow-y: hidden;
+} */
+
+.glide {
   height: 80%;
   overflow-y: hidden;
 }
@@ -55,16 +61,15 @@ header > h1 {
 }
 
 .card-body {
-  width: 70vw;
+  width: 100%;
   height: 70vh;
   word-wrap: break-word;
   border: 0;
   box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
     inset 0px -5px #00000030;
-
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -74,35 +79,20 @@ header > h1 {
 }
 
 .card-body.back {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .card-body.front {
   position: absolute;
 }
 .card-title {
-  font-size: 5vw;
+  font-size: 3vw;
   line-height: 1;
 }
-.card-body.back.card-title {
-    flex: 1;
-}
-.card-content {
-    flex: 5;
-    width: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 3px solid black;
-
-    font-size: 6vw;
-}
-
-.carousel-arrow {
+/* .carousel-arrow {
   position: absolute;
   display: flex;
   justify-content: space-between;
@@ -112,9 +102,7 @@ header > h1 {
   right: 1.25rem;
   left: 1.25rem;
   height: 6vh;
-}
-
-
+} */
 
 .flip {
   width: 100%;
@@ -153,7 +141,15 @@ header > h1 {
   border: none;
 }
 
-.dropdown > .btn,
+.dropdown > .btn {
+  background: #2e2e2e;
+  padding: 5px;
+  color: #fff;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
+    inset 0px -5px #00000030;
+  border-radius: 0;
+  margin: 0.5rem;
+}
 .dropdown > .dropdown-content {
   background: #2e2e2e;
   padding: 11px;
@@ -163,4 +159,40 @@ header > h1 {
     inset 0px -5px #00000030;
   border-radius: 0;
   margin: 0.5rem;
+}
+
+#flipBtn {
+  position: absolute;
+  background: #2e2e2e;
+  right: 10px;
+  padding: 5px;
+  bottom: 10px;
+  height: 3em;
+  width: 3em;
+  z-index: 100;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
+    inset 0px -5px #00000030;
+}
+
+#dropdown > ul {
+  height: 10em;
+  z-index: 100;
+}
+
+.glide_slide {
+  width: 100%;
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.glide__slide--active {
+  width: 100%;
+  filter: blur(0);
+  -webkit-filter: blur(0);
+}
+
+.glide__arrow {
+  border: none;
 }
