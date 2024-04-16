@@ -72,6 +72,7 @@ header > h1 {
   font-size: 5vw;
   color: silver;
 }
+
 .card-body.back {
     display: flex;
     flex-direction: column;
@@ -79,6 +80,9 @@ header > h1 {
     align-items: center;
 }
 
+.card-body.front {
+  position: absolute;
+}
 .card-title {
   font-size: 5vw;
   line-height: 1;
@@ -98,6 +102,20 @@ header > h1 {
     font-size: 6vw;
 }
 
+.carousel-arrow {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
+    scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  --tw-translate-y: -50%;
+  right: 1.25rem;
+  left: 1.25rem;
+  height: 6vh;
+}
+
+
+
 .flip {
   width: 100%;
   height: 100%;
@@ -115,4 +133,34 @@ header > h1 {
 }
 .flip.flipped {
   transform: rotateX(180deg);
+}
+
+.custom-overlay {
+  background: #2e2e2e;
+  padding: 11px;
+  color: #fff;
+
+  font-size: 20px;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
+    inset 0px -5px #00000030;
+}
+
+.dropdown {
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  right: 10px;
+  border: none;
+}
+
+.dropdown > .btn,
+.dropdown > .dropdown-content {
+  background: #2e2e2e;
+  padding: 11px;
+  color: #fff;
+  font-size: 18px;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
+    inset 0px -5px #00000030;
+  border-radius: 0;
+  margin: 0.5rem;
 }

@@ -75,14 +75,18 @@ function appendCarouselItem(idx, data) {
         <div class="carousel-item">
             <div class="flip">
                 <div id="${idx}" class="card-body front ${data.front.color}">
-                    <a href="#${idx - 1 >= 0 ? idx - 1 : length - 1}" class=“bg-transparent border-none text-7xl">❮</a>
                     ${data.front.color ? `<div class="card-title">${data.front.title}</div>` : data.front.title}
-                    
-                    <a href="#${(idx + 1) % length}" class=“bg-transparent border-none text-7xl">❯</a>
+                    <div class="carousel-arrow">
+                        <a href="#${idx - 1 >= 0 ? idx - 1 : length - 1}" class=“bg-transparent border-none text-7xl">❮</a>
+                        <a href="#${(idx + 1) % length}" class=“bg-transparent border-none text-7xl">❯</a>
+                    </div>
                 </div>
                 <div id="${idx}" class="card-body back ${data.back.color}">
-                    <div class="card-title">${data.back.title}</div>
-                    <div class="card-content">${data.back.content}</div>
+                    ${data.front.color ? `<div class="card-title">${data.front.title}</div>` : data.front.title}
+                    <div class="carousel-arrow">
+                        <a href="#${idx - 1 >= 0 ? idx - 1 : length - 1}" class=“bg-transparent border-none text-7xl">❮</a>
+                        <a href="#${(idx + 1) % length}" class=“bg-transparent border-none text-7xl">❯</a>
+                    </div>
                 </div>
             </div>
         </div>`;
@@ -91,12 +95,11 @@ function appendCarouselItem(idx, data) {
 }
 
 async function appendMapCarouselItem() {
-    let lastCard = carousel.lastElementChild;
-    let lastCardId = Number(lastCard.querySelector('.flip > .card-body').id);
-    console.log(lastCardId);
-    const mapHtml = {
-        front: {
-            title: `
+  let lastCard = carousel.lastElementChild;
+  let lastCardId = Number(lastCard.querySelector('.flip > .card-body').id);
+  const mapHtml = {
+    front: {
+      title: `
     <div id="map" style="width: 100%; height: 100%"></div>
     <div id="dropdown" class="dropdown dropdown-bottom dropdown-end">
       <div tabindex="0" role="button" class="btn">정보보기</div>
@@ -107,21 +110,23 @@ async function appendMapCarouselItem() {
         </div>
       </div>
     </div>`,
-            color: '',
-        },
-        back: {
-            title: '',
-            color: 'bg-blue',
-        },
-    };
-    appendCarouselItem(lastCardId + 1, mapHtml);
-    // 좌표
-    const curCoord = await getCoords();
-    const destCoord = {
-        latitude: 37.2526,
-        longtitude: 127.0723,
-    };
-    const coords = [curCoord, destCoord];
+      color: '',
+    },
+    back: {
+      title: '',
+      color: 'bg-blue',
+    },
+  };
+  appendCarouselItem(lastCardId + 1, mapHtml);
+  carousel.lastElementChild.querySelector('.flip > .card-body').setAttribute('style', 'padding:0px');
+
+  // 좌표
+  const curCoord = await getCoords();
+  const destCoord = {
+    latitude: 37.2526,
+    longtitude: 127.0723,
+  };
+  const coords = [curCoord, destCoord];
 
     // 지도 생성
     const mapContainer = document.getElementById('map');
