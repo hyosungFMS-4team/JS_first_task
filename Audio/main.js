@@ -12,11 +12,13 @@ let musicIndex = 0;
 
 const audio = document.querySelector('audio');
 const audioSrc = document.getElementById('audio_src');
+let isPlaying = true;
 
 const audioBtnPlay = document.getElementById('audio_player_controller_play');
 const audioBtnPrev = document.getElementById('audio_player_controller_prev');
 const audioBtnNext = document.getElementById('audio_player_controller_next');
 
+const audioImageContainer = document.querySelector('.audio_player_image');
 const audioImage = document.getElementById('audio_player_image');
 const audioTitle = document.querySelector('.audio_player_title');
 
@@ -37,18 +39,19 @@ function onMusicLoaded() {
 
 function playMusic() {
   console.log('music played');
-  audioImage.style.animation = `spin 4s linear infinite`;
+  isPlaying = true;
+  audioImageContainer.classList.add('spin');
   audio.play();
 }
 function pauseMusic() {
   console.log('music paused');
-  audioImage.style.animation = `none`;
-  audioBtnPlay.innerHTML = `<img src="image/btn_play.png"/>`;
+  isPlaying = false;
+  audioImageContainer.classList.remove('spin');
   audio.pause();
 }
 
 function onPlayButtonClicked() {
-  if (audio.duration > 0 && !audio.paused) {
+  if (isPlaying) {
     pauseMusic();
   } else {
     playMusic();
