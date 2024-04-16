@@ -40,13 +40,8 @@
 }
 
 body {
-  /* background: #dce3e6; */
   height: 100dvh;
   overflow: hidden;
-
-  /* background-image: url(image/pixel-city-thumb.jpg); */
-
-  backdrop-filter: blur(4px);
   user-select: none;
   margin: 0px;
   padding: 10px;
