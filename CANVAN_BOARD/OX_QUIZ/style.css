@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'PIXEL';
-  src: url('font/NeoDunggeunmoPro-Regular.ttf') format('truetype');
+  src: url('../font/NeoDunggeunmoPro-Regular.ttf') format('truetype');
 }
 
 @keyframes jumpAnimation {
