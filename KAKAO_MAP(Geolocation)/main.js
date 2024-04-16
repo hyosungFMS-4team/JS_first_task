@@ -29,10 +29,13 @@ const carousels = document.getElementById('carousel-lists');
 function makeMarkersToMap(map, coords) {
     // 모든 마커가 한 번에 표시될 수 있도록 지도 경계 설정
     const mapBounds = new kakao.maps.LatLngBounds();
-
+    let imageSrc = './image/pixil-frame-0.png', // 마커이미지의 주소입니다
+    imageSize = new kakao.maps.Size(26, 38), // 마커이미지의 크기입니다
+    imageOption = { offset: new kakao.maps.Point(13, 38) }; //마커 위치 내부 좌표
+    let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
     for (const coord of coords) {
         const point = new kakao.maps.LatLng(coord.latitude, coord.longtitude);
-        const marker = new kakao.maps.Marker({ position: point });
+        const marker = new kakao.maps.Marker({ position: point,image: markerImage }  );
 
         mapBounds.extend(point);
         marker.setMap(map);
@@ -170,52 +173,3 @@ async function getCarDirection(start, end) {
         console.error('Error:', error);
     }
 }
-// MAIN
-(async () => {
-  const coords = await getCoords();
-  const curPosMarker = new kakao.maps.LatLng(coords.latitude, coords.longtitude);
-  const homeMarker = new kakao.maps.LatLng(37.2526, 127.0723);
-  let points = [curPosMarker, homeMarker];
-  let bounds = new kakao.maps.LatLngBounds();
-  let imageSrc = './image/pixil-frame-0.png', // 마커이미지의 주소입니다
-    imageSize = new kakao.maps.Size(26, 38), // 마커이미지의 크기입니다
-    imageOption = { offset: new kakao.maps.Point(13, 38) };
-  let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-  let marker;
-  for (let i = 0; i < points.length; i++) {
-    // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
-    marker = new kakao.maps.Marker({ position: points[i], image: markerImage });
-    marker.setMap(map);
-
-    // LatLngBounds 객체에 좌표를 추가합니다
-    bounds.extend(points[i]);
-  }
-
-  const data = await getCarDirection(coords, {
-    latitude: 37.2526,
-    longtitude: 127.0723,
-  });
-
-  console.log('data', data);
-  const linePath = [];
-  data.routes[0].sections[0].roads.forEach(router => {
-    router.vertexes.forEach((vertex, index) => {
-      // x,y 좌표가 우르르 들어옵니다. 그래서 인덱스가 짝수일 때만 linePath에 넣어봅시다.
-      // 저도 실수한 것인데 lat이 y이고 lng이 x입니다.
-      if (index % 2 === 0) {
-        linePath.push(new kakao.maps.LatLng(router.vertexes[index + 1], router.vertexes[index]));
-      }
-    });
-  });
-
-  const polyline = new kakao.maps.Polyline({
-    path: linePath,
-    strokeWeight: 5,
-    strokeColor: '#000000',
-    strokeOpacity: 0.7,
-    strokeStyle: 'solid',
-  });
-  polyline.setMap(map);
-
-  map.setBounds(bounds);
-})();
