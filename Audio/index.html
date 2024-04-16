@@ -15,34 +15,31 @@
       </head>
 
 <body>
-    <div class="player">
+    <div class="audio_player pixel_border">
         <audio>
             <source id="audio_src" src="" type="audio/mpeg">
         </audio>
 
-        <!-- 음악 제목과 앨범 이미지 div -->
-        <div class="player_info">
-            <div id="player_info_image">
-                <div id="player_info_center"></div>
+        <div class="audio_player_image_and_title">
+            <div class="audio_player_image circle spin">
+                <img id="audio_player_image" class=" " src="image/first.jpg"/>
             </div>
-
-            <div class="player_info_text">
-                <p id="player_text_title">TITLE</p>
-            </div>
+            <div class="audio_player_title">TITLE</div>
         </div>
 
-        <!-- 컨트롤러 버튼 (재생, 뒤로가기, 앞으로가기) -->
-        <div class="player_controller">
-            <button id="player_btn_prev" class="player_btn">
+        <div class="audio_player_controller">
+            <button id="audio_player_controller_prev">
                 <img src="image/btn_prev.png"/>
             </button>
-            <button id="player_btn_play" class="player_btn">
-                <img src="image/btn_play.png"/>
-            </button>
-            <button id="player_btn_next" class="player_btn">
+            <label class="swap swap-rotate">
+                <input id="audio_player_controller_play" type="checkbox" />
+                <img src="image/btn_play.png" class="swap-on"/>
+                <img src="image/btn_pause.png" class="swap-off"/>
+            </label>
+            <button id="audio_player_controller_next">
                 <img src="image/btn_next.png"/>
             </button>
         </div>
-    </div>
+    </div> 
 </body>
 </html>
