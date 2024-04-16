@@ -96,10 +96,11 @@ body {
 }
 
 .mapContainer {
-  width: 50%;
+  width: 60%;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36;
 }
 .mapDetail {
-  width: 50%;
+  width: 40%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -108,6 +109,9 @@ body {
 .mapDetail > p {
   padding: 0 0 0 15px;
   font-size: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 10em;
 }
 
 /* colors */
