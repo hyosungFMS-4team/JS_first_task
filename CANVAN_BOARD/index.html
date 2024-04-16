@@ -12,8 +12,8 @@
     <div class="container">
       <section class="header">
         <h1 class="title">
-          <span style="color: #1d4ed8">O</span>
-          <span style="color: #ff0000">X</span>
+          <span class="title_o" style="color: #1d4ed8">O</span>
+          <span class="title_x" style="color: #ff0000">X</span>
           QUIZ 윤동훈
         </h1>
       </section>
@@ -49,8 +49,21 @@
         <button class="submit_btn">제출하기</button>
       </section>
 
-      <!-- image -->
+      <!-- 뒤로가기 -->
       <img class="back_pointer" src="image/pointer.png" alt="" />
+
+      <!-- 모달 -->
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <div class="modal_top">
+            <span class="close" onclick="closeModal()">&times;</span>
+          </div>
+          <div class="modal_bottom">
+            <p>모든 문제를 다 풀어야 제출할 수 있습니다.</p>
+            <div></div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

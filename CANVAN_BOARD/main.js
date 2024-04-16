@@ -66,14 +66,34 @@ function drag(event) {
   event.dataTransfer.setData('text/plain', event.target.id);
 }
 
-// 이벤트 전파 막기
 function allowDrop(event) {
   event.preventDefault();
+
+  const sectionClass = event.target.classList;
+
+  if (sectionClass.contains('o_drop_main')) {
+    event.target.style.background = '#1d4ed8bf';
+  } else if (sectionClass.contains('x_drop_main')) {
+    event.target.style.background = '#ff0000bf';
+  }
 }
 
-//
+function handleDragLeave(event) {
+  // 해당 영역의 스타일을 초기화합니다.
+  if (event.target.tagName === 'BUTTON') {
+    return;
+  }
+  event.target.style.backgroundColor = '';
+}
+
 function drop(event, columnId) {
   event.preventDefault();
+
+  // 드롭된 섹션의 스타일을 되돌립니다.
+  if (event.target.tagName === 'BUTTON') {
+  } else {
+    event.target.style.backgroundColor = '';
+  }
 
   const data = event.dataTransfer.getData('text/plain');
   const draggedElement = document.getElementById(data);
@@ -90,6 +110,13 @@ function drop(event, columnId) {
     event.target.appendChild(draggedElement);
   }
 }
+
+const dropSections = document.querySelectorAll('.o_drop_main, .x_drop_main');
+dropSections.forEach(section => {
+  section.addEventListener('dragenter', allowDrop);
+  section.addEventListener('dragover', allowDrop);
+  section.addEventListener('dragleave', handleDragLeave);
+});
 
 function updateTaskStatus(taskId, newStatus) {
   tasks = tasks.map(task => {
@@ -125,7 +152,7 @@ submitBtn.addEventListener('click', submitAnswer);
 
 function submitAnswer() {
   if (!isAllItemDrop()) {
-    alert('전부 다 풀어주세요');
+    openModal();
     return;
   }
 
@@ -164,3 +191,38 @@ function isAllItemDrop() {
 
   return flag;
 }
+
+// Modal
+
+const modal = document.getElementById('myModal');
+
+function openModal() {
+  modal.style.display = 'block';
+
+  let cnt = 0;
+  tasks.forEach(item => {
+    if (item.status === 'quiz_items') {
+      cnt++;
+    }
+  });
+
+  const showLeftTask = document.querySelector('.modal_bottom div');
+  showLeftTask.innerHTML = `남은 문항 ( <span style="color: #ff0000;">${cnt}</span> / ${tasks.length} )`;
+
+  document.querySelector('.modal_bottom').appendChild(showLeftTask);
+  setTimeout(() => {
+    closeModal();
+  }, 3000);
+}
+
+function closeModal() {
+  modal.style.display = 'none';
+}
+
+// 모달 외부를 클릭하면 닫는 코드
+window.onclick = function (event) {
+  var modal = document.getElementById('myModal');
+  if (event.target == modal) {
+    modal.style.display = 'none';
+  }
+};
