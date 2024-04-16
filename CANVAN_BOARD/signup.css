@@ -241,3 +241,31 @@ body {
   object-fit: cover;
   filter: blur(3px);
 }
+
+/* back-pointer */
+.back_pointer {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  width: 80px;
+  height: 80px;
+  transition: all 300ms ease-in;
+}
+
+.back_pointer:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  animation: backPointerAnimation 0.8s infinite;
+}
+
+@keyframes backPointerAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

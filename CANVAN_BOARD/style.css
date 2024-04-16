@@ -238,7 +238,7 @@ body {
 .back_pointer {
   position: absolute;
   top: 10px;
-  left: 10px;
+  left: 20px;
   width: 80px;
   height: 80px;
   transition: all 300ms ease-in;
