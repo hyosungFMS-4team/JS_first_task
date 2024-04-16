@@ -1,12 +1,38 @@
-const mapContainer = document.getElementById('map');
 const carousels = document.getElementById('carousel-lists');
 
 // MAIN
 (async () => {
-    // 
-    buildCarousels();
+    // Carousel task
+    const tasks = localStorage.getItem('tasks');
+    JSON.parse(tasks).forEach(task => appendTaskCarouselItem(task, 'bg-green', 'bg-blue'));
 
-    const map = loadKakaoMap(mapContainer, 37.2526, 127.0723);
+    // Carousel map
+    appendMapCarouselItem('나와의 거리', 'bg-green', 'bg-blue');
+    
+})();
+
+async function appendMapCarouselItem(title, swapOnColor, swapOffColor) {
+
+    const swapOffContainer = `
+        <div class="w-1/2 flex items-center justify-center">
+            <div class="text-[300px] text-gray-950">O</div>
+            <div class="mapContainer">
+                 <div id="map" style="width: 100%; height: 400px"></div>
+             </div>
+        </div>
+        <div class="w-1/2 flex justify-center items-center">
+            <div id="mapDetail" class="text-3xl text-gray-950 pr-10 pl-10 pb-10"></div>
+        </div>`;
+    
+    const swapOnContainer = `
+        <div class="w-1/2 flex items-center justify-center">
+            <div class="text-[300px] text-gray-950">O</div>
+        </div>
+        <div class="w-1/2 flex justify-center items-center">
+            <div id="mapInfo" class="text-3xl text-gray-950 pr-10 pl-10 pb-10"></div>
+        </div>`;
+
+    appendCarouselItem('map-carousel-item', title, swapOffContainer, swapOffColor, swapOnContainer, swapOnColor);
 
     // 좌표
     const curCoord = await getCoords();
@@ -16,6 +42,10 @@ const carousels = document.getElementById('carousel-lists');
     };
     const coords = [curCoord, destCoord];
 
+    // 지도 생성
+    const mapContainer = document.getElementById('map');
+    const map = loadKakaoMap(mapContainer, 37.2526, 127.0723);
+
     // 좌표 마커로 지도에 추가
     makeMarkersToMap(map, coords);
 
@@ -23,19 +53,99 @@ const carousels = document.getElementById('carousel-lists');
     const carDirection = await getCarDirection(curCoord, destCoord);
     console.log(carDirection);
     makePathLineToMap(map, carDirection);
+
+    const directionSummary = carDirection.routes[0].summary;
+    const directionFare = directionSummary.fare;
+
+    const mapInfo = document.getElementById('mapInfo');
+    mapInfo.innerHTML = `
+        TAXI: ${directionFare.taxi} <br>
+        TOLL: ${directionFare.toll} <br>
+
+        DIST: ${directionSummary.distance}
+    `;
+}
+
+function appendTaskCarouselItem(task, swapOnColor, swapOffColor) {
+
+    const swapOffContainer = `
+        <div class="w-1/2 flex items-center justify-center">
+            <div class="text-[300px] text-gray-950">${task.status === 'o_section' ? 'O' : 'X'}</div>
+        </div>
+        <div class="w-1/2 flex justify-center items-center">
+            <div class="text-3xl text-gray-950 pr-10 pl-10 pb-10">
+                ${task.answer}
+            </div>
+        </div>`;
     
-})();
+    const swapOnContainer = `
+        <div class="w-1/2 flex items-center justify-center">
+            <div class="text-[300px] text-gray-950">O</div>
+        </div>
+        <div class="w-1/2 flex justify-center items-center">
+            <div class="text-3xl text-gray-950 pr-10 pl-10 pb-10">
+                ${task.answer}
+            </div>
+        </div>`;
+
+    appendCarouselItem(task.id, `${task.id}. ${task.content}`, swapOffContainer, swapOffColor, swapOnContainer, swapOnColor);
+}
+
+function appendCarouselItem(id, title, swapOffContainer, swapOffColor, swapOnContainer, swapOnColor) {
+    const carouselItem = document.createElement('label');
+    carouselItem.setAttribute('class', 'swap swap-flip carousel-item');
+    carouselItem.innerHTML = `
+        <input type="checkbox" />
+        <div class="swap-off swap-container">
+            <div id="${id}" class="swap-item flex flex-col relative ${swapOffColor}">
+                <div class="item-title">${title}</div>
+                <div class="item-container">${swapOffContainer}</div>
+            </div>
+            <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                <a href="#slide4" class="bg-transparent border-none text-7xl">❮</a>
+                <a href="#slide2" class="bg-transparent border-none text-7xl">❯</a>
+            </div>
+        </div>
+        <div class="swap-on swap-container">
+            <div id="${id}" class="swap-item flex flex-col relative ${swapOnColor}">
+                <div class="item-title">${title}</div>
+                <div class="item-container">${swapOnContainer}</div>
+            </div>
+            <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                <a href="#slide4" class="bg-transparent border-none text-7xl">❮</a>
+                <a href="#slide2" class="bg-transparent border-none text-7xl">❯</a>
+            </div>
+        </div>
+    `
+    carousels.appendChild(carouselItem);
+}
+
+function loadKakaoMap(mapContainer, lat, lng) {
+    const mapOptions = {
+        center: new kakao.maps.LatLng(lat, lng)
+    };
+    return new kakao.maps.Map(mapContainer, mapOptions);
+}
+function makeMarker(lat, lng) {
+    const markerPos = new kakao.maps.LatLng(lat, lng);
+    const marker = new kakao.maps.Marker({
+        position: markerPos,
+    });
+    return marker;
+}
 
 function makeMarkersToMap(map, coords) {
     // 모든 마커가 한 번에 표시될 수 있도록 지도 경계 설정
     const mapBounds = new kakao.maps.LatLngBounds();
-    let imageSrc = './image/pixil-frame-0.png', // 마커이미지의 주소입니다
-    imageSize = new kakao.maps.Size(26, 38), // 마커이미지의 크기입니다
-    imageOption = { offset: new kakao.maps.Point(13, 38) }; //마커 위치 내부 좌표
-    let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+    const imageSrc = './image/pixil-frame-0.png';                   // 마커이미지의 주소
+    const imageSize = new kakao.maps.Size(26, 38);                  // 마커이미지의 크기
+    const imageOption = { offset: new kakao.maps.Point(13, 38) };   //마커 위치 내부 좌표
+    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
     for (const coord of coords) {
         const point = new kakao.maps.LatLng(coord.latitude, coord.longtitude);
-        const marker = new kakao.maps.Marker({ position: point,image: markerImage }  );
+        const marker = new kakao.maps.Marker({ position: point, image: markerImage }  );
 
         mapBounds.extend(point);
         marker.setMap(map);
@@ -64,73 +174,6 @@ function makePathLineToMap(map, direction) {
     });
 
     polyline.setMap(map);
-}
-
-function buildCarousels() {
-    const tasks = localStorage.getItem('tasks');
-    const answerSheet = localStorage.getItem('answerSheet');
-    const score = localStorage.getItem('score');
-
-    JSON.parse(tasks).forEach(task => appendTaskToCarousels(task, 'bg-green', 'bg-blue'));
-}
-
-function appendTaskToCarousels(task, flipBgColor, defaultBgColor) {
-    const carouselItem = document.createElement('label');
-    carouselItem.setAttribute('class', 'swap swap-flip carousel-item');
-    carouselItem.innerHTML = `
-        <input type="checkbox" />
-
-        <div class="swap-on swap-container">
-        <div id="${task.id}" class="swap-item flex flex-col relative ${flipBgColor}">
-            <div class="item-title">${task.id}. ${task.content}</div>
-            <div class="item-container">
-            <div class="w-1/2 flex items-center justify-center">
-                <div class="text-[300px] text-gray-950">O</div>
-            </div>
-            <div class="w-1/2 flex justify-center items-center">
-                <div class="text-3xl text-gray-950 pr-10 pl-10 pb-10">
-                ${task.answer}
-                </div>
-            </div>
-            <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                <a href="#slide4" class="bg-transparent border-none text-7xl">❮</a>
-                <a href="#slide2" class="bg-transparent border-none text-7xl">❯</a>
-            </div>
-            </div>
-        </div>
-        </div>
-        <div class="swap-off swap-container">
-        <div id="${task.id}" class="swap-item flex flex-col relative ${defaultBgColor} h-full">
-            <div class="item-title">${task.id}. ${task.content}</div>
-            <div class="item-container">
-            <div class="w-3/4 flex justify-center items-center">
-                <div class="text-3xl text-gray-950 pr-10 pl-10 pb-10">
-                ${task.status === 'o_section' ? 'O' : 'X'}
-                </div>
-            </div>
-            <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                <a href="#slide4" class="bg-transparent border-none text-7xl">❮</a>
-                <a href="#slide2" class="bg-transparent border-none text-7xl">❯</a>
-            </div>
-            </div>
-        </div>
-        </div>`;
-    carousels.appendChild(carouselItem);
-}
-
-function loadKakaoMap(mapContainer, lat, lng) {
-    const mapOptions = {
-        center: new kakao.maps.LatLng(lat, lng),
-        level: 3,
-    };
-    return new kakao.maps.Map(mapContainer, mapOptions);
-}
-function makeMarker(lat, lng) {
-    const markerPos = new kakao.maps.LatLng(lat, lng);
-    const marker = new kakao.maps.Marker({
-        position: markerPos,
-    });
-    return marker;
 }
 
 async function getCoords() {
