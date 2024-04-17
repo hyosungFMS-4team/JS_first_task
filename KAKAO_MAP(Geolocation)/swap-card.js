@@ -3,22 +3,24 @@ const carousel = document.getElementById('carousel');
 const tasks = JSON.parse(localStorage.getItem('tasks'));
 const length = tasks.length;
 
+console.log(tasks);
 (async () => {
   // Carousel task
   tasks.forEach((task, idx) =>
     appendCarouselItem(idx, {
-      swapOff: {
+      front: {
         title: task.content,
         color: 'bg-blue',
       },
-      swapOn: {
+      back: {
         title: task.content,
         color: 'bg-red',
       },
     })
   );
 
-  flipItems();
+  flipCards();
+  appendMapCarouselItem();
 })();
 
 function appendCarouselItem(idx, data) {
@@ -27,25 +29,29 @@ function appendCarouselItem(idx, data) {
   item.innerHTML = `
         <div class="carousel-item">
             <div class="flip">
-                <div id="${idx}" class="card-body front ${data.swapOff.color}">
+                <div id="${idx}" class="card-body front ${data.front.color}">
                     <a href="#${idx - 1 >= 0 ? idx - 1 : length - 1}" class=“bg-transparent border-none text-7xl">❮</a>
-                    <div class="card-title">${data.swapOff.title}</div>
+                    <div class="card-title">${data.front.title}</div>
                     <a href="#${(idx + 1) % length}" class=“bg-transparent border-none text-7xl">❯</a>
                 </div>
-                <div id="${idx}" class="card-body back ${data.swapOn.color}">
+                <div id="${idx}" class="card-body back ${data.back.color}">
                     <a href="#${idx - 1 >= 0 ? idx - 1 : length - 1}" class=“bg-transparent border-none text-7xl">❮</a>
-                    <div class="card-title">${data.swapOn.title}</div>
+                    <div class="card-title">${data.back.title}</div>
                     <a href="#${(idx + 1) % length}" class=“bg-transparent border-none text-7xl">❯</a>
                 </div>
             </div>
-            
         </div>`;
 
   carousel.appendChild(item);
 }
 
-async function appendMapCarouselItem(title, swapOnColor, swapOffColor) {
-  const swapOffContainer = `
+async function appendMapCarouselItem() {
+  let lastCard = carousel.lastElementChild;
+  let lastCardId = Number(lastCard.querySelector('.flip > .card-body').id);
+  console.log(lastCardId);
+  const mapHtml = {
+    front: {
+      title: `
     <div id="map" style="width: 100%; height: 100%"></div>
     <div id="dropdown" class="dropdown dropdown-bottom dropdown-end">
       <div tabindex="0" role="button" class="btn">정보보기</div>
@@ -55,18 +61,15 @@ async function appendMapCarouselItem(title, swapOnColor, swapOffColor) {
           <p>you can use any element as a dropdown.</p>
         </div>
       </div>
-    </div>`;
-
-  const swapOnContainer = `
-          <div class="w-1/2 flex items-center justify-center">
-              <div class="text-[300px] text-gray-950">O</div>
-          </div>
-          <div class="w-1/2 flex justify-center items-center">
-              <div id="mapInfo" class="text-3xl text-gray-950 pr-10 pl-10 pb-10"></div>
-          </div>`;
-  length++;
-  appendCarouselItem(title, swapOffContainer, swapOffColor, swapOnContainer, swapOnColor);
-
+    </div>`,
+      color: 'bg-red',
+    },
+    back: {
+      title: '',
+      color: 'bg-blue',
+    },
+  };
+  appendCarouselItem(lastCardId + 1, mapHtml);
   // 좌표
   const curCoord = await getCoords();
   const destCoord = {
@@ -99,7 +102,7 @@ async function appendMapCarouselItem(title, swapOnColor, swapOffColor) {
       `;
 }
 
-function flipItems() {
+function flipCards() {
   const carouselItem = document.querySelectorAll('.carousel-item');
   const flip = document.querySelectorAll('.flip');
 
