@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="board.css" />
     <script defer src="board.js"></script>
   </head>
-  <body>
+  <body ondragover="drag_over(event)" ondrop="drop(event)">
     <!-- background -->
     <div class="bg-video">
       <video class="bg-video__content" autoplay muted loop>
         <source src="../image/signup6-background.mov" type="video/mp4" />
       </video>
     </div>
-
+    <!-- Board -->
     <div class="board_main">
       <div class="board_top">
         <div class="board_top_title">
@@ -45,17 +45,17 @@
             </div>
             <div class="board_mid_left_area_divider"></div>
             <div class="board_mid_left_area_bottom">
-              <div class="menu-item" id="allPosts">
-                <img class="menu_folder" src="../image/Windows_Folder_1995_open.png" alt="" />
-                <div>ALL</div>
+              <div class="menu-item" id="ALL">
+                <img class="menu_folder selected_folder" src="../image/Windows_Folder_1995_open.png" alt="" />
+                <div class="item_title">ALL</div>
               </div>
-              <div class="menu-item" id="freeBoard">
+              <div class="menu-item" id="FreeBoard">
                 <img class="menu_folder" src="../image/window_not_open_folder.png" alt="" />
-                <div>Free Board</div>
+                <div class="item_title">Free Board</div>
               </div>
-              <div class="menu-item" id="freeBoard">
+              <div class="menu-item" id="DailyBoard">
                 <img class="menu_folder" src="../image/window_not_open_folder.png" alt="" />
-                <div>Daily Board</div>
+                <div class="item_title">Daily Board</div>
               </div>
             </div>
           </div>
@@ -63,14 +63,25 @@
         <div class="board_mid_right">
           <div class="board_mid_right_area">
             <div class="board_mid_right_area_top">
-              <div>ALL</div>
+              <div class="current_board"></div>
             </div>
             <div class="board_mid_right_area_divider"></div>
             <div class="board_mid_right_area_bottom">
-              <div class="board_inside_main" id="board"></div>
-              <div class="board_inside_bottom">
-                <hr />
-                <button class="board_inside_bottom_btn">Create</button>
+              <div class="board_inside_main">
+                <div class="board_inside_main_top">
+                  <div class="board_inside_main_top_description">
+                    <div class="decription_title">title</div>
+                    <div class="decription_writer">writer</div>
+                    <div class="decription_date">date</div>
+                  </div>
+                  <hr />
+                </div>
+                <div class="board_inside_main_mid" id="board"></div>
+
+                <div class="board_inside_main_bottom">
+                  <hr />
+                  <button class="board_inside_bottom_btn">Create</button>
+                </div>
               </div>
             </div>
           </div>
@@ -79,7 +90,7 @@
       <div class="board_bottom">
         <div class="board_bottom_left">
           <div class="board_bottom_left_area">
-            <div class="board_bottom_left_area_text">4 post(s)</div>
+            <div class="board_bottom_left_area_text"></div>
           </div>
         </div>
         <div class="board_bottom_right">
@@ -89,5 +100,7 @@
         </div>
       </div>
     </div>
+
+    <!-- Post Modal -->
   </body>
 </html>
