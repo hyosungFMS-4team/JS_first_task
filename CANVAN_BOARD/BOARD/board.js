@@ -44,7 +44,7 @@ function createBoardItem(data) {
 
   const titleElement = document.createElement('div');
   titleElement.classList.add('post_description_title');
-  titleElement.textContent = data.title;
+  titleElement.textContent = `${data.title}.txt`;
 
   const writerElement = document.createElement('div');
   writerElement.classList.add('post_description_writer');
