@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="board.css" />
+    <script defer src="board.js"></script>
+  </head>
+  <body>
+    <!-- background -->
+    <div class="bg-video">
+      <video class="bg-video__content" autoplay muted loop>
+        <source src="../image/signup6-background.mov" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="board_main">
+      <div class="board_top">
+        <div class="board_top_title">
+          <div class="board_top_title_left">
+            <img src="../image/favicon.ico" class="title" />
+            <div class="title">Board</div>
+          </div>
+          <div class="board_top_title_right">
+            <button class="board_top_btn">?</button>
+            <button class="board_top_btn">X</button>
+          </div>
+        </div>
+        <div class="board_top_nav_area">
+          <div class="board_top_nav">
+            <div><span>F</span>ile</div>
+            <div><span>E</span>dit</div>
+            <div><span>V</span>iew</div>
+            <div><span>H</span>elp</div>
+          </div>
+        </div>
+      </div>
+      <div class="board_mid">
+        <div class="board_mid_left">
+          <div class="board_mid_left_area">
+            <div class="board_mid_left_area_top">
+              <div><b>Menu</b></div>
+            </div>
+            <div class="board_mid_left_area_divider"></div>
+            <div class="board_mid_left_area_bottom">
+              <div class="menu-item" id="allPosts">
+                <img class="menu_folder" src="../image/Windows_Folder_1995_open.png" alt="" />
+                <div>ALL</div>
+              </div>
+              <div class="menu-item" id="freeBoard">
+                <img class="menu_folder" src="../image/window_not_open_folder.png" alt="" />
+                <div>Free Board</div>
+              </div>
+              <div class="menu-item" id="freeBoard">
+                <img class="menu_folder" src="../image/window_not_open_folder.png" alt="" />
+                <div>Daily Board</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="board_mid_right">
+          <div class="board_mid_right_area">
+            <div class="board_mid_right_area_top">
+              <div>ALL</div>
+            </div>
+            <div class="board_mid_right_area_divider"></div>
+            <div class="board_mid_right_area_bottom">
+              <div class="board_inside_main" id="board"></div>
+              <div class="board_inside_bottom">
+                <hr />
+                <button class="board_inside_bottom_btn">Create</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="board_bottom">
+        <div class="board_bottom_left">
+          <div class="board_bottom_left_area">
+            <div class="board_bottom_left_area_text">4 post(s)</div>
+          </div>
+        </div>
+        <div class="board_bottom_right">
+          <div class="board_bottom_right_area">
+            <div class="board_bottom_right_area_text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
