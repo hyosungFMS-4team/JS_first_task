@@ -1,0 +1,66 @@
+@font-face {
+  font-family: 'PIXEL';
+  src: url('../font/NeoDunggeunmoPro-Regular.ttf') format('truetype');
+}
+
+body {
+  height: 100dvh;
+  overflow: hidden;
+  user-select: none;
+  margin: 0px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'PIXEL';
+}
+
+.board_main {
+  background-color: aqua;
+  width: 75%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.board_top {
+  flex: 1.2;
+  background-color: blue;
+}
+
+.board_mid {
+  flex: 8;
+  display: flex;
+}
+
+.board_mid_left {
+  background-color: hotpink;
+  flex: 2.5;
+}
+
+.board_mid_right {
+  flex: 7.5;
+}
+
+.board_bottom {
+  flex: 0.8;
+  background-color: darkred;
+}
+
+/* background */
+
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.bg-video__content {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: blur(3px);
+}
