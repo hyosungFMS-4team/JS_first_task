@@ -136,10 +136,14 @@ async function getCarDirection(start, end) {
   const homeMarker = new kakao.maps.LatLng(37.2526, 127.0723);
   let points = [curPosMarker, homeMarker];
   let bounds = new kakao.maps.LatLngBounds();
+  let imageSrc = './image/pixil-frame-0.png', // 마커이미지의 주소입니다
+    imageSize = new kakao.maps.Size(26, 38), // 마커이미지의 크기입니다
+    imageOption = { offset: new kakao.maps.Point(13, 38) };
+  let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
   let marker;
   for (let i = 0; i < points.length; i++) {
     // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
-    marker = new kakao.maps.Marker({ position: points[i] });
+    marker = new kakao.maps.Marker({ position: points[i], image: markerImage });
     marker.setMap(map);
 
     // LatLngBounds 객체에 좌표를 추가합니다
