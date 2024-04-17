@@ -31,7 +31,8 @@ function appendCarouselItem(idx, data) {
             <div class="flip">
                 <div id="${idx}" class="card-body front ${data.front.color}">
                     <a href="#${idx - 1 >= 0 ? idx - 1 : length - 1}" class=“bg-transparent border-none text-7xl">❮</a>
-                    <div class="card-title">${data.front.title}</div>
+                    ${data.front.color ? `<div class="card-title">${data.front.title}</div>` : data.front.title}
+                    
                     <a href="#${(idx + 1) % length}" class=“bg-transparent border-none text-7xl">❯</a>
                 </div>
                 <div id="${idx}" class="card-body back ${data.back.color}">
@@ -62,7 +63,7 @@ async function appendMapCarouselItem() {
         </div>
       </div>
     </div>`,
-      color: 'bg-red',
+      color: '',
     },
     back: {
       title: '',
