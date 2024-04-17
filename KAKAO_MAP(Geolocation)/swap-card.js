@@ -2,37 +2,179 @@ const carousel = document.getElementById('carousel');
 
 const tasks = JSON.parse(localStorage.getItem('tasks'));
 const length = tasks.length;
-tasks.forEach((task, idx) => 
+
+(async () => {
+  // Carousel task
+  tasks.forEach((task, idx) =>
     appendCarouselItem(idx, {
-        swapOff: {
-            title: task.content,
-            color: 'bg-blue'
-        },
-        swapOn: {
-            title: task.content,
-            color: 'bg-red'
-        }
-    }));
+      swapOff: {
+        title: task.content,
+        color: 'bg-blue',
+      },
+      swapOn: {
+        title: task.content,
+        color: 'bg-red',
+      },
+    })
+  );
+
+  flipItems();
+})();
 
 function appendCarouselItem(idx, data) {
-    const item = document.createElement('div');
+  const item = document.createElement('div');
 
-    item.innerHTML = `
-        <label class="swap swap-flip carousel-item card">
-            <input type="checkbox">
-
-            <div id="${idx}" class="card-body swap-off ${data.swapOff.color}">
-                <a href="#${(idx-1 >= 0) ? idx-1 : length-1}" class=“bg-transparent border-none text-7xl">❮</a>
-                <div class="card-title">${data.swapOff.title}</div>
-                <a href="#${(idx+1) % length}" class=“bg-transparent border-none text-7xl">❯</a>
+  item.innerHTML = `
+        <div class="carousel-item">
+            <div class="flip">
+                <div id="${idx}" class="card-body front ${data.swapOff.color}">
+                    <a href="#${idx - 1 >= 0 ? idx - 1 : length - 1}" class=“bg-transparent border-none text-7xl">❮</a>
+                    <div class="card-title">${data.swapOff.title}</div>
+                    <a href="#${(idx + 1) % length}" class=“bg-transparent border-none text-7xl">❯</a>
+                </div>
+                <div id="${idx}" class="card-body back ${data.swapOn.color}">
+                    <a href="#${idx - 1 >= 0 ? idx - 1 : length - 1}" class=“bg-transparent border-none text-7xl">❮</a>
+                    <div class="card-title">${data.swapOn.title}</div>
+                    <a href="#${(idx + 1) % length}" class=“bg-transparent border-none text-7xl">❯</a>
+                </div>
             </div>
+            
+        </div>`;
 
-            <div id="${idx}" class="card-body swap-on ${data.swapOn.color}">
-                <a href="#${(idx-1 >= 0) ? idx-1 : length-1}" class=“bg-transparent border-none text-7xl">❮</a>
-                <div class="card-title">${data.swapOn.title}</div>
-                <a href="#${(idx+1) % length}" class=“bg-transparent border-none text-7xl">❯</a>
-            </div>
-        </label>`;
-
-    carousel.appendChild(item);
+  carousel.appendChild(item);
 }
+
+function flipItems() {
+  const carouselItem = document.querySelectorAll('.carousel-item');
+  const flip = document.querySelectorAll('.flip');
+
+  carouselItem.forEach(x => {
+    x.addEventListener('click', e => {
+      flip.forEach(a => {
+        a.addEventListener('click', e => {
+          if (a.classList.contains('flipped')) {
+            a.classList.remove('flipped');
+          } else {
+            a.classList.add('flipped');
+          }
+        });
+      });
+    });
+  });
+}
+
+function loadKakaoMap(mapContainer, lat, lng) {
+  const mapOptions = {
+    center: new kakao.maps.LatLng(lat, lng),
+  };
+  return new kakao.maps.Map(mapContainer, mapOptions);
+}
+function makeMarker(lat, lng) {
+  const markerPos = new kakao.maps.LatLng(lat, lng);
+  const marker = new kakao.maps.Marker({
+    position: markerPos,
+  });
+  return marker;
+}
+
+function makeMarkersToMap(map, coords) {
+  // 모든 마커가 한 번에 표시될 수 있도록 지도 경계 설정
+  const mapBounds = new kakao.maps.LatLngBounds();
+
+  const imageSrc = './image/pixil-frame-0.png'; // 마커이미지의 주소
+  const imageSize = new kakao.maps.Size(26, 38); // 마커이미지의 크기
+  const imageOption = { offset: new kakao.maps.Point(13, 38) }; //마커 위치 내부 좌표
+  const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+  let content = `<div>
+         <span class="custom-overlay">김기정</span>
+      </div>`;
+  for (const coord of coords) {
+    const point = new kakao.maps.LatLng(coord.latitude, coord.longtitude);
+    const marker = new kakao.maps.Marker({ position: point, image: markerImage });
+
+    mapBounds.extend(point);
+    marker.setMap(map);
+
+    const customOverlay = new kakao.maps.CustomOverlay({
+      map: map,
+      position: point,
+      content: content,
+      yAnchor: 2.7,
+    });
+    customOverlay.setMap(map);
+  }
+
+  map.setBounds(mapBounds);
+}
+
+function makePathLineToMap(map, direction) {
+  const linePath = [];
+  direction.routes[0].sections[0].roads.forEach(router => {
+    router.vertexes.forEach((_, index) => {
+      if (index % 2 === 0) {
+        linePath.push(new kakao.maps.LatLng(router.vertexes[index + 1], router.vertexes[index]));
+      }
+    });
+  });
+
+  // 경로 지도에 추가
+  const polyline = new kakao.maps.Polyline({
+    path: linePath,
+    strokeWeight: 5,
+    strokeColor: '#000000',
+    strokeOpacity: 0.7,
+    strokeStyle: 'solid',
+  });
+
+  polyline.setMap(map);
+}
+
+async function getCoords() {
+  const pos = await new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+  return {
+    longtitude: pos.coords.longitude,
+    latitude: pos.coords.latitude,
+  };
+}
+async function getCarDirection(start, end) {
+  const url = 'https://apis-navi.kakaomobility.com/v1/directions';
+  const REST_API_KEY = 'e639f9820bd9dfd6a0627ecb6b06f5f3';
+
+  const origin = `${start.longtitude},${start.latitude}`;
+  const destination = `${end.longtitude},${end.latitude}`;
+  const queryParams = new URLSearchParams({
+    origin: origin,
+    destination: destination,
+  });
+
+  const headers = {
+    Authorization: `KakaoAK ${REST_API_KEY}`,
+    'Content-Type': 'application/json',
+  };
+
+  const requestUrl = `${url}?${queryParams}`;
+
+  try {
+    const response = await fetch(requestUrl, {
+      method: 'GET',
+      headers: headers,
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+// const test = document.getElementById('map').addEventListener('click', function (event) {
+//   event.preventDefault();
+// });
+
+// document.getElementById('infoBtn').addEventListener('click', function (event) {
+//   event.preventDefault();
+// });
