@@ -44,6 +44,61 @@ function appendCarouselItem(idx, data) {
   carousel.appendChild(item);
 }
 
+async function appendMapCarouselItem(title, swapOnColor, swapOffColor) {
+  const swapOffContainer = `
+    <div id="map" style="width: 100%; height: 100%"></div>
+    <div id="dropdown" class="dropdown dropdown-bottom dropdown-end">
+      <div tabindex="0" role="button" class="btn">정보보기</div>
+      <div tabindex="0" class="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-primary text-primary-content">
+        <div class="card-body">
+          <h3 class="card-title">Card title!</h3>
+          <p>you can use any element as a dropdown.</p>
+        </div>
+      </div>
+    </div>`;
+
+  const swapOnContainer = `
+          <div class="w-1/2 flex items-center justify-center">
+              <div class="text-[300px] text-gray-950">O</div>
+          </div>
+          <div class="w-1/2 flex justify-center items-center">
+              <div id="mapInfo" class="text-3xl text-gray-950 pr-10 pl-10 pb-10"></div>
+          </div>`;
+  length++;
+  appendCarouselItem(title, swapOffContainer, swapOffColor, swapOnContainer, swapOnColor);
+
+  // 좌표
+  const curCoord = await getCoords();
+  const destCoord = {
+    latitude: 37.2526,
+    longtitude: 127.0723,
+  };
+  const coords = [curCoord, destCoord];
+
+  // 지도 생성
+  const mapContainer = document.getElementById('map');
+  const map = loadKakaoMap(mapContainer, 37.2526, 127.0723);
+
+  // 좌표 마커로 지도에 추가
+  makeMarkersToMap(map, coords);
+
+  // 경로 생성 및 지도에 추가
+  const carDirection = await getCarDirection(curCoord, destCoord);
+  console.log(carDirection);
+  makePathLineToMap(map, carDirection);
+
+  const directionSummary = carDirection.routes[0].summary;
+  const directionFare = directionSummary.fare;
+
+  const mapInfo = document.getElementById('mapInfo');
+  mapInfo.innerHTML = `
+          TAXI: ${directionFare.taxi} <br>
+          TOLL: ${directionFare.toll} <br>
+  
+          DIST: ${directionSummary.distance}
+      `;
+}
+
 function flipItems() {
   const carouselItem = document.querySelectorAll('.carousel-item');
   const flip = document.querySelectorAll('.flip');
