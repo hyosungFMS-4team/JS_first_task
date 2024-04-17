@@ -167,6 +167,11 @@ body {
   margin-right: 7px;
 }
 
+.selected {
+  background-color: #000080;
+  color: white;
+}
+
 /* BOARD */
 .board_mid_right {
   flex: 7.5;
@@ -265,6 +270,71 @@ body {
   border-color: #808080 #ffffff #ffffff #808080;
 }
 
+/* Board AREA */
+
+.board_inside_main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.board_inside_main_top {
+  flex: 1;
+}
+
+.board_inside_main_top_description {
+  display: flex;
+  width: 100%;
+}
+
+.decription_title {
+  flex: 5;
+  color: #808080;
+}
+
+.decription_writer {
+  flex: 2.5;
+  color: #808080;
+}
+
+.decription_date {
+  flex: 2.5;
+  color: #808080;
+}
+
+.board_inside_main_mid {
+  flex: 8;
+}
+
+.post_description {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.post_description_img {
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+  flex: 0.3;
+}
+
+.post_description_title {
+  flex: 4.7;
+}
+
+.post_description_writer {
+  flex: 2.5;
+}
+
+.post_description_date {
+  flex: 2.5;
+}
+
+.board_inside_main_bottom {
+  flex: 1;
+}
+
 /* background */
 
 .bg-video {
@@ -283,11 +353,85 @@ body {
   filter: blur(3px);
 }
 
+/* Modal */
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.Modal_main {
+  min-width: fit-content;
+  width: 75%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  background: #c0c0c0;
+  border-width: 1px;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  border-style: solid;
+  padding: 2px;
+}
+
+.modal_top {
+  display: flex;
+}
+
+.Modal_mid {
+  background: #fcfcfc;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.4);
+  border: 2.5px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding: 15px;
+}
+
+.Modal_top_nav_area {
+  flex: 5;
+  height: 100%;
+  width: 100%;
+  background: #c0c0c0;
+  border: none;
+  color: black;
+  display: flex;
+  align-items: center;
+}
+
+.Modal_top_nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.Modal_top_nav span {
+  text-decoration: underline;
+}
+
+.Modal_top_nav div {
+  width: 100%;
+  padding: 2px 4px;
+  text-align: center;
+}
+
+.Modal_top_nav div:hover {
+  background: #000080;
+  color: #fff;
+}
+
+.Modal_top_title {
+  flex: 5;
+  display: flex;
+  justify-content: space-between;
+  width: 98%;
+  margin: auto;
+}
+
 /* button */
 
 /* scrollbar */
 
-body *::-webkit-scrollbar {
+/* body *::-webkit-scrollbar {
   width: 16px;
   height: 16px;
   background: none;
@@ -336,4 +480,4 @@ body *::-webkit-scrollbar-button:single-button:horizontal:increment {
 
 body *::-webkit-scrollbar-corner {
   background: silver;
-}
+} */
