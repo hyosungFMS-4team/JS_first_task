@@ -79,6 +79,13 @@ header > h1 {
   color: silver;
 }
 
+.card-body.back {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .card-body.front {
   position: absolute;
 }
@@ -108,9 +115,6 @@ header > h1 {
 
 .flip > div {
   backface-visibility: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .flip .back {
