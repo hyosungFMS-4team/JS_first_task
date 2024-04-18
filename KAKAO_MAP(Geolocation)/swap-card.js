@@ -7,9 +7,9 @@ const taskDetails = [
       <summary class="m-1 btn">정보 보기</summary>
       <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
         <li id="mapInfo"></li>
-
       </ul>
-    </details>`,
+    </details>
+    <button id="flipBtn">flip</button>`,
   },
   {
     title: 'title2',
@@ -58,6 +58,7 @@ window.addEventListener('load', function () {
     type: 'carousel',
     focusAt: 'center',
     perView: 2,
+    dragThreshold: 500,
     gap: 40,
     keyboard: true,
     peek: {
