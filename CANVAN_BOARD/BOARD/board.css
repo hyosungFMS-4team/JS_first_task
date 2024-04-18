@@ -59,17 +59,19 @@ body {
 
 .board_top_nav_area {
   flex: 5;
+  /* width: 100%; */
   height: 100%;
   background: #c0c0c0;
   border: none;
   color: black;
   display: flex;
+  justify-content: flex-start;
   align-items: center;
 }
 
 .board_top_nav {
   display: flex;
-  width: 25%;
+  width: 40%;
   display: flex;
   justify-content: space-evenly;
 }
@@ -178,6 +180,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  width: 100%;
 }
 
 .board_mid_right_area {
@@ -208,6 +211,7 @@ body {
   border: 2.5px solid;
   border-color: #808080 #ffffff #ffffff #808080;
   padding: 15px;
+  overflow: scroll;
 }
 
 .board_inside_bottom_btn {
