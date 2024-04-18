@@ -1,3 +1,9 @@
+.glide_slide {
+  width: 100%;
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+}
+
 .glide_slide > img {
   height: 100%;
   width: 100%;
