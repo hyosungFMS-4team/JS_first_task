@@ -2,7 +2,14 @@
 const taskDetails = [
   {
     title: 'title1',
-    content: 'content1',
+    content: `<div id="map" style="width: 100%; height: 100%"></div>
+    <details class="dropdown dropdown-bottom dropdown-end" id="dropdown">
+      <summary class="m-1 btn">정보 보기</summary>
+      <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+        <li id="mapInfo"></li>
+
+      </ul>
+    </details>`,
   },
   {
     title: 'title2',
@@ -42,7 +49,6 @@ const taskDetails = [
   },
 ];
 
-const carousel = document.getElementById('carousel');
 const glide = document.querySelector('.glide__slides');
 const tasks = JSON.parse(localStorage.getItem('tasks'));
 const length = tasks.length;
@@ -92,34 +98,13 @@ const glide_default = {
       },
     })
   );
-
+  kakao.maps.load(function () {
+    appendMapCarouselItem();
+  });
   flipCards();
-  // appendMapCarouselItem();
 })();
-//carousel
-{
-  /* <div class="carousel-item">
-            <div class="flip">
-                <div id="${idx}" class="card-body front ${data.front.color}">
-                    ${data.front.color ? `<div class="card-title">${data.front.title}</div>` : data.front.title}
-                    <div class="carousel-arrow">
-                        <a href="#${idx - 1 >= 0 ? idx - 1 : length - 1}" class=“bg-transparent border-none text-7xl">❮</a>
-                        <a href="#${(idx + 1) % length}" class=“bg-transparent border-none text-7xl">❯</a>
-                    </div>
-                </div>
-                <div id="${idx}" class="card-body back ${data.back.color}">
-                    ${data.front.color ? `<div class="card-title">${data.front.title}</div>` : data.front.title}
-                    <div class="carousel-arrow">
-                        <a href="#${idx - 1 >= 0 ? idx - 1 : length - 1}" class=“bg-transparent border-none text-7xl">❮</a>
-                        <a href="#${(idx + 1) % length}" class=“bg-transparent border-none text-7xl">❯</a>
-                    </div>
-                </div>
-            </div>
-        </div> */
-}
 
 function appendCarouselItem(idx, data) {
-  // const item = document.createElement('div');
   let item = document.createElement('li');
   item.setAttribute('class', 'glide_slide');
   item.innerHTML = `
@@ -132,7 +117,7 @@ function appendCarouselItem(idx, data) {
             </div>
           </div>
           <div id="${idx}" class="card-body back ${data.back.color}">
-              ${data.front.color ? `<div class="card-title">${data.front.title}</div>` : data.front.title}
+              ${data.back.content}
             <div class="glide__arrows" data-glide-el="controls">
               <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><</button>
               <button class="glide__arrow glide__arrow--right" data-glide-dir=">">></button>
@@ -142,6 +127,45 @@ function appendCarouselItem(idx, data) {
       `;
   glide.appendChild(item);
   // carousel.appendChild(item);
+}
+
+async function appendMapCarouselItem() {
+  // 좌표
+  const curCoord = await getCoords();
+  const destCoord = {
+    latitude: 37.2526,
+    longtitude: 127.0723,
+  };
+  const coords = [curCoord, destCoord];
+
+  // 지도 생성
+  const mapContainer = document.getElementById('map');
+  const parentElement = mapContainer.parentElement;
+
+  const mapOptions = {
+    center: new kakao.maps.LatLng(37.2526, 127.0723),
+  };
+  const map = new kakao.maps.Map(mapContainer, mapOptions);
+  parentElement.style.padding = '0';
+  parentElement.style.gap = '0';
+  // 좌표 마커로 지도에 추가
+  makeMarkersToMap(map, coords);
+
+  // 경로 생성 및 지도에 추가
+  const carDirection = await getCarDirection(curCoord, destCoord);
+  console.log(carDirection);
+  makePathLineToMap(map, carDirection);
+
+  const directionSummary = carDirection.routes[0].summary;
+  const directionFare = directionSummary.fare;
+
+  const mapInfo = document.getElementById('mapInfo');
+  mapInfo.innerHTML = `
+        TAXI: ${directionFare.taxi} <br>
+        TOLL: ${directionFare.toll} <br>
+
+        DIST: ${directionSummary.distance}
+    `;
 }
 
 function flipCards() {
@@ -163,12 +187,6 @@ function flipCards() {
   });
 }
 
-function loadKakaoMap(mapContainer, lat, lng) {
-  const mapOptions = {
-    center: new kakao.maps.LatLng(lat, lng),
-  };
-  return new kakao.maps.Map(mapContainer, mapOptions);
-}
 function makeMarker(lat, lng) {
   const markerPos = new kakao.maps.LatLng(lat, lng);
   const marker = new kakao.maps.Marker({
@@ -239,6 +257,7 @@ async function getCoords() {
     latitude: pos.coords.latitude,
   };
 }
+
 async function getCarDirection(start, end) {
   const url = 'https://apis-navi.kakaomobility.com/v1/directions';
   const REST_API_KEY = 'e639f9820bd9dfd6a0627ecb6b06f5f3';
@@ -270,10 +289,17 @@ async function getCarDirection(start, end) {
   }
 }
 
-const carouselArrows = document.querySelectorAll('.glide__arrows button');
+const glideArrows = document.querySelectorAll('.glide__arrows button');
 
-carouselArrows.forEach(arrow => {
+glideArrows.forEach(arrow => {
   arrow.addEventListener('click', function (event) {
     event.stopPropagation(); // 이벤트 전파 중지
   });
+});
+document.getElementById('map').addEventListener('click', function (event) {
+  event.stopPropagation();
+});
+
+document.getElementById('dropdown').addEventListener('click', function (event) {
+  event.stopPropagation();
 });
