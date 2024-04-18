@@ -1,0 +1,242 @@
+/* @font-face {
+  font-family: 'PIXEL';
+  src: url('font/NeoDunggeunmoPro-Regular.ttf') format('truetype');
+} */
+
+@font-face {
+  font-family: 'Windows 95';
+  src: url('../font/w-95-sans-serif.woff2') format('woff2'), url('../font/w-95-sans-serif.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  height: 100dvh;
+  overflow: hidden;
+
+  backdrop-filter: blur(4px);
+  user-select: none;
+  margin: 0px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 98%;
+  font-family: 'Windows 95';
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.background-video__content {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: blur(2px);
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0.3;
+  width: 100%;
+  margin-top: 100px;
+}
+
+.title {
+  width: 100%;
+  height: 90%;
+  background: #2e2e2e;
+  padding: 15px;
+  letter-spacing: 3px;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
+    inset 0px -5px #00000030;
+
+  font-size: xx-large;
+}
+
+/* navbar */
+.navbar {
+  flex: 2;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.navbar-center {
+  width: 60%;
+  justify-content: flex-end;
+  margin: 0px; /* 위, 아래, 왼쪽, 오른쪽에 10px의 패딩을 설정합니다. */
+}
+
+.menu-horizontal li {
+  margin-right: 10px; /*  Members, Board, Sign Up 간격 조정 */
+}
+
+.introduce {
+  flex: 8;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center;
+  text-align: center;
+}
+
+#test {
+  width: 100%;
+  height: 100%;
+  display: grid; /* 그리드 컨테이너로 설정 */
+  grid-template-columns: repeat(2, 1fr); /* 열을 2개로 설정 */
+  justify-items: center; /* 아이템들을 가운데로 정렬 */
+  align-items: center;
+}
+
+/* board */
+
+.board_main {
+  width: 90%;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  background: #c0c0c0;
+  border-width: 1px;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  border-style: solid;
+  padding: 2px;
+}
+
+.board_top_titles {
+  flex: 5;
+  display: flex;
+  justify-content: space-between;
+  width: 98%;
+  margin: auto;
+  background: #000080;
+  color: #fff;
+}
+
+.board_top_titles_left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.titles {
+  width: 28px;
+  height: 27px;
+  margin-right: 8px;
+}
+
+.board_top_nav {
+  display: flex;
+  width: 25%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.board_top_nav span {
+  text-decoration: underline;
+}
+
+.board_top_nav div {
+  width: 100%;
+  padding: 2px 4px;
+  text-align: center;
+}
+
+.board_top_nav div:hover {
+  background: #000080;
+  color: #fff;
+}
+
+.board_top_title_right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board_top_nav_area {
+  flex: 5;
+  height: 100%;
+  background: #c0c0c0;
+  border: none;
+  color: black;
+  display: flex;
+  align-items: center;
+}
+
+.board_top_btn {
+  margin: 2px 2px 2px 0;
+  float: right;
+  width: 28px;
+  height: 27px;
+  background: #c0c0c0;
+  border-width: 1px;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 0;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: Tahoma;
+  text-align: center;
+  font-family: 'Windows 95';
+}
+
+.board_main_divider {
+  flex: 0.3;
+}
+
+.borad_main_border {
+  width: 100%;
+}
+
+.board_main_bottom {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex: 9;
+  background: #fcfcfc;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.4);
+  border: 2.5px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding: 15px;
+}
+
+.vertical-line {
+  border-left: 3px solid #808080; /* 세로 줄 추가 */
+  height: 100%; /* 세로 줄의 높이를 컨테이너의 높이와 동일하게 설정 */
+  margin-left: 10px; /* p 태그들과의 간격 조정 */
+}
+
+.person {
+  width: 150px;
+  height: 150px;
+}
+.text {
+  margin-left: 30px;
+}
+.text p {
+  margin: 0; /* p 태그의 기본 마진 제거 */
+  text-align: left; /* 왼쪽 정렬 */
+  margin: 5px 0;
+}
