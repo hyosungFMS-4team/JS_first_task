@@ -7,14 +7,12 @@
     <link rel="stylesheet" href="style.css" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="main.js"></script>
   </head>
-  <body>
-    <!-- video -->
+  <body onclick="checkPos()">
+    <!-- background image -->
     <div class="background-video">
-      <video class="background-video__content" autoplay muted loop>
-        <source src="./media/sunless-city-korea-desktop-wallpaperwaifu-com.mp4" type="video/mp4" />
-        <strong>Your browser does not support the video tag.</strong>
-      </video>
+      <img class="background-video__content" src="image/Snow-pixel.png" alt="" />
     </div>
 
     <div class="container">
@@ -22,172 +20,55 @@
         <h1 class="title">
           <!-- 네비게이션 바 코드 여기에 넣기 -->
           <div class="navbar">
-            <div class="navbar-start">
-              <div class="dropdown">
-                <div tabindex="0" role="button" class="btn btn-ghost">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="white">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
-                  </svg>
-                </div>
-                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-4 shadow bg-base-100 rounded-box w-60">
-                  <li>
-                    <a>Members</a>
-                    <ul class="p-4">
-                      <li><a>김기정</a></li>
-                      <li><a>박민석</a></li>
-                      <li><a>윤동훈</a></li>
-                      <li><a>이재아</a></li>
-                    </ul>
-                  </li>
-                  <li><a>Board</a></li>
-                  <li><a>Sign Up</a></li>
-                </ul>
+            <div class="nav-left">
+              <div class="neon" style="display: block">
+                <div><span class="flicker-slow">F</span>O<span class="flicker-fast">U</span>R</div>
               </div>
-              <a class="btn btn-ghost" style="color: #ffffff; font-size: 18px">For<img src="./media/달2.jpeg" width="50" /></a>
             </div>
-            <div class="navbar-center lg:flex">
-              <ul class="menu menu-horizontal">
-                <li>
-                  <details>
-                    <summary class="text-white" style="font-size: 18px">Members</summary>
-                    <ul class="p-1">
-                      <li><a>김기정</a></li>
-                      <li><a>박민석</a></li>
-                      <li><a>윤동훈</a></li>
-                      <li><a>이재아</a></li>
-                    </ul>
-                  </details>
-                </li>
-                <li class="text-white ml-auto" style="font-size: 18px"><a>Board</a></li>
-                <li class="text-white" style="font-size: 18px"><a>Sign Up</a></li>
-              </ul>
+            <div class="nav-right">
+              <div class="nav_item" style="color: #fcfcfcca">MEMBERS</div>
+              <div class="nav_item" style="color: #fcfcfcca">BOARD</div>
+              <div class="nav_item" style="color: #fcfcfcca">SIGNUP</div>
             </div>
           </div>
         </h1>
       </section>
 
-      <div class="flex flex-col w-full">
-        <div class="divider divider-secondary"></div>
-      </div>
-
       <!-- introduce -->
       <div class="introduce">
-        <div id="test" class="grid grid-cols-2 gap-4">
-          <div class="board_main">
-            <div class="board_top">
-              <div class="board_top_titles">
-                <div class="board_top_titles_left">
-                  <img src="../image/favicon.ico" class="titles" />
-                  <div class="titles">KimKiJeong</div>
-                </div>
-                <div class="board_top_titles_right">
-                  <button class="board_top_btn">?</button>
-                  <button class="board_top_btn">X</button>
-                </div>
-              </div>
+        <div class="wrapper">
+          <div class="test_area wrapper">
+            <div id="kim" class="test test1">
+              <img class="charactor" src="image/kim_char.png" alt="" />
+              <img class="charactor_name" src="image/kim.png" alt="kim" />
             </div>
-
-            <div class="board_main_divider"></div>
-            <div class="board_main_bottom">
-              <img src="../image/jaeah_computer.jpeg" class="person" />
-              <div class="vertical-line"></div>
-              <div class="text">
-                <p>LeeJaeAh</p>
-                <br />
-                <p>female(26)</p>
-                <p>010-9180-6687</p>
-                <p>jaeah2171@gmail.com</p>
-              </div>
+            <div id="park" class="test test2">
+              <img class="charactor" src="image/park_char.png" alt="" />
+              <img class="charactor_name" src="image/park.png" alt="park" />
             </div>
-          </div>
-
-          <div class="board_main">
-            <div class="board_top">
-              <div class="board_top_titles">
-                <div class="board_top_titles_left">
-                  <img src="../image/favicon.ico" class="titles" />
-                  <div class="titles">ParkMinSeok</div>
-                </div>
-                <div class="board_top_titles_right">
-                  <button class="board_top_btn">?</button>
-                  <button class="board_top_btn">X</button>
-                </div>
-              </div>
+            <div id="yoon" class="test test3">
+              <img class="charactor" src="image/kim_char.png" alt="" />
+              <img class="charactor_name" src="image/yoon.png" alt="yoon" />
             </div>
-
-            <div class="board_main_divider"></div>
-            <div class="board_main_bottom">
-              <img src="../image/jaeah_computer.jpeg" class="person" />
-              <div class="vertical-line"></div>
-              <div class="text">
-                <p>LeeJaeAh</p>
-                <br />
-                <p>female(26)</p>
-                <p>010-9180-6687</p>
-                <p>jaeah2171@gmail.com</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="board_main">
-            <div class="board_top">
-              <div class="board_top_titles">
-                <div class="board_top_titles_left">
-                  <img src="../image/favicon.ico" class="titles" />
-                  <div class="titles">YoonDongHun</div>
-                </div>
-                <div class="board_top_titles_right">
-                  <button class="board_top_btn">?</button>
-                  <button class="board_top_btn">X</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="board_main_divider"></div>
-            <div class="board_main_bottom">
-              <img src="../image/jaeah_computer.jpeg" class="person" />
-              <div class="vertical-line"></div>
-              <div class="text">
-                <p>LeeJaeAh</p>
-                <br />
-                <p>female(26)</p>
-                <p>010-9180-6687</p>
-                <p>jaeah2171@gmail.com</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- window -->
-          <div class="board_main">
-            <div class="board_top">
-              <div class="board_top_titles">
-                <div class="board_top_titles_left">
-                  <img src="../image/favicon.ico" class="titles" />
-                  <div class="titles">LeeJaeAH</div>
-                </div>
-                <div class="board_top_titles_right">
-                  <button class="board_top_btn">X</button>
-                  <button class="board_top_btn">?</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- bottom -->
-            <div class="board_main_divider"></div>
-            <div class="board_main_bottom">
-              <img src="../image/jaeah_computer.jpeg" class="person" />
-              <div class="vertical-line"></div>
-              <div class="text">
-                <p style="font-size: 20px">LeeJaeAh</p>
-                <br />
-                <p>female(26)</p>
-                <p>010-9180-6687</p>
-                <p>jaeah2171@gmail.com</p>
-              </div>
+            <div id="lee" class="test test4">
+              <img class="charactor" src="image/kim_char.png" alt="" />
+              <img class="charactor_name" src="image/lee.png" alt="이재아" />
             </div>
           </div>
         </div>
+
+        <div class="indicator"></div>
       </div>
+    </div>
+
+    <!-- 도움말  -->
+    <div class="help_tooltip">
+      <span class="help_text help_1">?</span>
+      <span class="help_text help_2"
+        >To watch introduce of member, <br />
+        Use <span style="color: #ff0000"><b>Click</b></span> and <span style="color: #ff0000"><b>Send</b></span> Penguin to
+        <span style="color: #ff0000">Charactor</span></span
+      >
     </div>
   </body>
 </html>
