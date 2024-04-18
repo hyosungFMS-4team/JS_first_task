@@ -1,6 +1,12 @@
-let currentSelectBoard = JSON.parse(localStorage.getItem('selectedBoard')) || 'allPosts';
+// let currentSelectBoard = JSON.parse(localStorage.getItem('selectedBoard')) || 'ALL';
+
+let currentSelectBoard = JSON.parse(localStorage.getItem('selectedBoard')) || 'ALL';
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (currentSelectBoard !== ALL) {
+    renderBoard('ALL');
+    return;
+  }
   renderBoard(currentSelectBoard);
 });
 
@@ -26,7 +32,14 @@ function renderBoard(category) {
   const boardContainer = document.getElementById('board');
   boardContainer.innerHTML = '';
 
-  const filteredData = dummyData[category] || [];
+  let menuSelector = category;
+  if (category === '"ALL"') {
+    console.log(category.substr(1, 3));
+    menuSelector = category.substr(1, 3);
+  }
+
+  //   const filteredData = dummyData[category] || [];
+  const filteredData = dummyData[menuSelector] || [];
 
   filteredData.forEach(item => {
     const boardItem = createBoardItem(item);
