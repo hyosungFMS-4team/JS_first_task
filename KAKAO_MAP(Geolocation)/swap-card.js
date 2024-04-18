@@ -1,9 +1,38 @@
 const carousel = document.getElementById('carousel');
-
+const glide = document.querySelector('.glide__slides');
 const tasks = JSON.parse(localStorage.getItem('tasks'));
 const length = tasks.length;
 
-console.log(tasks);
+window.addEventListener('load', function () {
+  new Glide('.glide', {
+    type: 'carousel',
+    focusAt: 'center',
+    perView: 2,
+    gap: 40,
+    keyboard: true,
+    peek: {
+      before: 30,
+      after: 30,
+    },
+  }).mount();
+});
+
+//glide default class names
+const glide_default = {
+  direction: {
+    ltr: 'glide--ltr',
+    rtl: 'glide--rtl',
+  },
+  slider: 'glide--slider',
+  carousel: 'glide--carousel',
+  swipeable: 'glide--swipeable',
+  dragging: 'glide--dragging',
+  cloneSlide: 'glide__slide--clone',
+  activeNav: 'glide__bullet--active',
+  activeSlide: 'glide__slide--active',
+  disabledArrow: 'glide__arrow--disabled',
+};
+
 (async () => {
   // Carousel task
   tasks.forEach((task, idx) =>
@@ -20,14 +49,11 @@ console.log(tasks);
   );
 
   flipCards();
-  appendMapCarouselItem();
+  // appendMapCarouselItem();
 })();
-
-function appendCarouselItem(idx, data) {
-  const item = document.createElement('div');
-
-  item.innerHTML = `
-        <div class="carousel-item">
+//carousel
+{
+  /* <div class="carousel-item">
             <div class="flip">
                 <div id="${idx}" class="card-body front ${data.front.color}">
                     ${data.front.color ? `<div class="card-title">${data.front.title}</div>` : data.front.title}
@@ -44,74 +70,40 @@ function appendCarouselItem(idx, data) {
                     </div>
                 </div>
             </div>
-        </div>`;
-
-  carousel.appendChild(item);
+        </div> */
 }
 
-async function appendMapCarouselItem() {
-  let lastCard = carousel.lastElementChild;
-  let lastCardId = Number(lastCard.querySelector('.flip > .card-body').id);
-  const mapHtml = {
-    front: {
-      title: `
-    <div id="map" style="width: 100%; height: 100%"></div>
-    <div id="dropdown" class="dropdown dropdown-bottom dropdown-end">
-      <div tabindex="0" role="button" class="btn">정보보기</div>
-      <div tabindex="0" class="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-primary text-primary-content">
-        <div class="card-body">
-          <h3 class="card-title">Card title!</h3>
-          <p>you can use any element as a dropdown.</p>
+function appendCarouselItem(idx, data) {
+  // const item = document.createElement('div');
+  let item = document.createElement('li');
+  item.setAttribute('class', 'glide_slide');
+  item.innerHTML = `
+        <div class="flip">
+          <div id="${idx}" class="card-body front ${data.front.color}">
+          ${data.front.color ? `<div class="card-title">${data.front.title}</div>` : data.front.title}
+            <div class="glide__arrows" data-glide-el="controls">
+              <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><</button>
+              <button class="glide__arrow glide__arrow--right" data-glide-dir=">">></button>
+            </div>
+          </div>
+          <div id="${idx}" class="card-body back ${data.back.color}">
+              ${data.front.color ? `<div class="card-title">${data.front.title}</div>` : data.front.title}
+            <div class="glide__arrows" data-glide-el="controls">
+              <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><</button>
+              <button class="glide__arrow glide__arrow--right" data-glide-dir=">">></button>
+            </div>
+          </div> 
         </div>
-      </div>
-    </div>`,
-      color: '',
-    },
-    back: {
-      title: '',
-      color: 'bg-blue',
-    },
-  };
-  appendCarouselItem(lastCardId + 1, mapHtml);
-  carousel.lastElementChild.querySelector('.flip > .card-body').setAttribute('style', 'padding:0px');
-
-  // 좌표
-  const curCoord = await getCoords();
-  const destCoord = {
-    latitude: 37.2526,
-    longtitude: 127.0723,
-  };
-  const coords = [curCoord, destCoord];
-
-  // 지도 생성
-  const mapContainer = document.getElementById('map');
-  const map = loadKakaoMap(mapContainer, 37.2526, 127.0723);
-
-  // 좌표 마커로 지도에 추가
-  makeMarkersToMap(map, coords);
-
-  // 경로 생성 및 지도에 추가
-  const carDirection = await getCarDirection(curCoord, destCoord);
-  console.log(carDirection);
-  makePathLineToMap(map, carDirection);
-
-  const directionSummary = carDirection.routes[0].summary;
-  const directionFare = directionSummary.fare;
-
-  const mapInfo = document.getElementById('mapInfo');
-  mapInfo.innerHTML = `
-          TAXI: ${directionFare.taxi} <br>
-          TOLL: ${directionFare.toll} <br>
-  
-          DIST: ${directionSummary.distance}
       `;
+  glide.appendChild(item);
+  // carousel.appendChild(item);
 }
 
 function flipCards() {
-  const carouselItem = document.querySelectorAll('.carousel-item');
+  const glideSlide = document.querySelectorAll('li');
   const flip = document.querySelectorAll('.flip');
 
-  carouselItem.forEach(x => {
+  glideSlide.forEach(x => {
     x.addEventListener('click', e => {
       flip.forEach(a => {
         a.addEventListener('click', e => {
@@ -233,14 +225,10 @@ async function getCarDirection(start, end) {
   }
 }
 
-const carouselArrows = document.querySelectorAll('.carousel-arrow a');
+const carouselArrows = document.querySelectorAll('.glide__arrows button');
 
 carouselArrows.forEach(arrow => {
   arrow.addEventListener('click', function (event) {
     event.stopPropagation(); // 이벤트 전파 중지
   });
 });
-
-// document.getElementById('infoBtn').addEventListener('click', function (event) {
-//   event.preventDefault();
-// });
