@@ -31,6 +31,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="swap-card.css" />
     <script defer src="swap-card.js"></script>
+
+    <!-- audio -->
+    <link rel="stylesheet" href="../Audio/style.css">
+    <script defer src="../Audio/main.js"></script>
   </head>
 
   <body>
@@ -41,6 +45,33 @@
           <span style="color: red">X</span>
           QUIZ 박민석
         </h1>
+        <div class="audio_player pixel_border">
+          <audio>
+              <source id="audio_src" src="" type="audio/mpeg">
+          </audio>
+  
+          <div class="audio_player_image_and_title">
+              <div class="audio_player_image circle spin">
+                  <img id="audio_player_image" class=" " src="image/first.jpg"/>
+                  <img id="audio_player_image" class=" " src="image/lpneedle.png"/>
+              </div>
+              <div class="audio_player_title">TITLE</div>
+          </div>
+  
+          <div class="audio_player_controller">
+              <button id="audio_player_controller_prev">
+                  <img src="image/btn_prev.png"/>
+              </button>
+              <label class="swap swap-rotate">
+                  <input id="audio_player_controller_play" type="checkbox" />
+                  <img src="image/btn_play.png" class="swap-on"/>
+                  <img src="image/btn_pause.png" class="swap-off"/>
+              </label>
+              <button id="audio_player_controller_next">
+                  <img src="image/btn_next.png"/>
+              </button>
+          </div>
+        </div> 
       </header>
 
       <!-- <div id="carousel" class="carousel carousel-center"></div> -->
