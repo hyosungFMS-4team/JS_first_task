@@ -219,7 +219,6 @@ async function getCarDirection(start, end) {
   };
 
   const requestUrl = `${url}?${queryParams}`;
-
   try {
     const response = await fetch(requestUrl, {
       method: 'GET',
@@ -234,9 +233,13 @@ async function getCarDirection(start, end) {
   }
 }
 
-// const test = document.getElementById('map').addEventListener('click', function (event) {
-//   event.preventDefault();
-// });
+const carouselArrows = document.querySelectorAll('.carousel-arrow a');
+
+carouselArrows.forEach(arrow => {
+  arrow.addEventListener('click', function (event) {
+    event.stopPropagation(); // 이벤트 전파 중지
+  });
+});
 
 // document.getElementById('infoBtn').addEventListener('click', function (event) {
 //   event.preventDefault();

@@ -6,6 +6,7 @@
 header {
   height: 15%;
   margin-bottom: 10px;
+  margin-top: 20px;
 }
 
 /* colors */
@@ -37,7 +38,7 @@ header {
 
 header > h1 {
   background: #2e2e2e;
-  padding: 5vh;
+  padding: 3vh;
   color: #fff;
   letter-spacing: 0.5vh;
   font-size: 4vh;
