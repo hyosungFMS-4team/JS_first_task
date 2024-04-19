@@ -4,8 +4,8 @@ const taskDetails = [
     title: 'title1',
     content: `<div id="map" style="width: 100%; height: 100%"></div>
     <details class="dropdown dropdown-bottom dropdown-end" id="dropdown">
-      <summary class="m-1 btn">정보 보기</summary>
-      <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+      <summary class="m-1 btn" id="mapSummary">정보 보기</summary>
+      <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52" id="mapUl">
         <li id="mapInfo"></li>
       </ul>
     </details>
@@ -59,7 +59,6 @@ window.addEventListener('load', function () {
     type: 'carousel',
     focusAt: 'center',
     perView: 2,
-    dragThreshold: 500,
     gap: 40,
     keyboard: true,
     peek: {
@@ -104,6 +103,7 @@ const glide_default = {
     appendMapCarouselItem();
   });
   flipCards();
+  handleGlideDrag();
 })();
 
 function appendCarouselItem(idx, data) {
@@ -291,27 +291,56 @@ async function getCarDirection(start, end) {
   }
 }
 
-const glideArrows = document.querySelectorAll('.glide__arrows button');
-const flipBtn = document.getElementById('flipBtn');
+function handleGlideDrag() {
+  const glideArrows = document.querySelectorAll('.glide__arrows button');
+  const mapElements = ['map', 'mapSummary', 'mapUl', 'mapInfo'];
+  const allElements = document.querySelectorAll('*');
 
-flipBtn.addEventListener('click', function () {
-  glide.enable();
-});
-
-glideArrows.forEach(arrow => {
-  arrow.addEventListener('click', function (event) {
-    event.stopPropagation(); // 이벤트 전파 중지
+  glideArrows.forEach(arrow => {
+    arrow.addEventListener('click', function (event) {
+      event.stopPropagation(); // 이벤트 전파 중지
+    });
   });
-});
-document.getElementById('map').addEventListener('click', function (event) {
-  event.stopPropagation();
-  glide.disable();
-});
 
-document.getElementById('map').addEventListener('mousedown', function (event) {
-  glide.disable();
-});
+  mapElements.forEach(elementId => {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.addEventListener('click', handleMapClick);
+      element.addEventListener('mousedown', handleMapMouseDown);
+    }
+  });
 
-document.getElementById('dropdown').addEventListener('click', function (event) {
-  event.stopPropagation();
-});
+  document.getElementById('dropdown').addEventListener('click', function (event) {
+    event.stopPropagation();
+  });
+
+  function handleMapClick(event) {
+    event.stopPropagation();
+    glide.disable();
+  }
+
+  function handleMapMouseDown(event) {
+    glide.disable();
+  }
+
+  document.getElementById('dropdown').addEventListener('click', function (event) {
+    event.stopPropagation();
+  });
+
+  // map과 dropdown 요소 제외한 모든 요소에 대해 이벤트 리스너 추가
+  allElements.forEach(element => {
+    let id = element.id;
+    if (id !== 'map' && id !== 'dropdown' && id !== 'mapSummary' && id !== 'mapUl' && id !== 'mapInfo') {
+      // 마우스가 요소 위에 있을 때 glide.enable() 실행
+      element.addEventListener('mouseenter', function () {
+        console.log('glide enabled');
+        glide.enable();
+      });
+      // 요소를 클릭했을 때 glide.enable() 실행
+      element.addEventListener('click', function () {
+        console.log('glide enabled');
+        glide.enable();
+      });
+    }
+  });
+}
