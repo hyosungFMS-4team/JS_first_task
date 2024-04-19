@@ -24,8 +24,8 @@
 
 .map_container {
     margin: auto;
-    width: 80%;
-    height: 80%;
+    width: 50vw;
+    height: 50vh;
 
     border: 3px solid black;
 }
@@ -38,4 +38,20 @@
     font-size: 20px;
     box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
       inset 0px -5px #00000030;
+  }
+
+  #motion-demo {
+    animation: move 3000ms infinite alternate ease-in-out;
+    width: 40px;
+    height: 40px;
+    background: red;
+  }
+
+  @keyframes move {
+    0% {
+      offset-distance: 0%;
+    }
+    100% {
+      offset-distance: 100%;
+    }
   }
