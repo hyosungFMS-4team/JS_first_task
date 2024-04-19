@@ -103,8 +103,25 @@ function init() {
     target.style.left = `${x}px`;
     target.style.top = `${y}px`;
 
+    // if (bool === true) {
+    //   checkPos(x, y);
+    // }
+
+    // FIXME:
+    if (penguinData.isDestination === true) {
+      penguinData.isDestination = false;
+    }
+
     if (bool === true) {
-      checkPos(x, y);
+      const returnList = checkPos(x, y);
+      console.log(returnList);
+
+      if (!returnList[0]) {
+        return;
+      }
+
+      penguinData.isDestination = true;
+      openModal(returnList[1], returnList[2]);
     }
   };
 
@@ -130,6 +147,8 @@ function init() {
       penguinData.jump ? createJumpMark(penguin) : (penguinData.jump = true);
     }
     if (animation !== 'celebrate') penguinData.jump = false;
+    // FIXME:
+    if (penguin.isDestination === true) penguinData.jump = false;
   };
 
   const randomDirection = () => {
@@ -150,6 +169,8 @@ function init() {
     stepLeft: true,
     marginPos: { x: 0, y: 0 },
     pos: { x: 0, y: 0 },
+    // FIXME:
+    isDestination: false,
   };
 
   const radToDeg = rad => Math.round(rad * (180 / Math.PI));
@@ -221,6 +242,11 @@ function init() {
   };
 
   const createJumpMark = penguin => {
+    // FIXME:
+    if (penguinData.isDestination === true) {
+      return;
+    }
+
     const { left, top } = penguin.childNodes[1].childNodes[3].childNodes[1].getBoundingClientRect();
     const mark = document.createElement('div');
     mark.className = 'jump_print';
@@ -387,8 +413,27 @@ console.log(fourPoint);
 testBoxList.forEach(item => {
   const rect = item.getBoundingClientRect();
 
+  let kName;
+  switch (item.id) {
+    case 'kim':
+      kName = '김기정';
+      break;
+    case 'park':
+      kName = '박민석';
+      break;
+    case 'yoon':
+      kName = '윤동훈';
+      break;
+    case 'lee':
+      kName = '이재아';
+      break;
+    default:
+      break;
+  }
+
   const rectPoint = {
     name: item.id,
+    koreanName: kName,
     topLeft: { x: rect.left, y: rect.top },
     bottomRight: { x: rect.right, y: rect.bottom },
   };
@@ -401,23 +446,13 @@ function updateLocalStoragePoint() {
   localStorage.setItem('point', JSON.stringify(fourPoint));
 }
 
-// 각 요소의 좌측 상단과 우측 하단 좌표를 가져오는 함수
-function getCoordinates(element) {
-  const rect = element.getBoundingClientRect();
-  return {
-    topLeft: { x: rect.left, y: rect.top },
-    bottomRight: { x: rect.right, y: rect.bottom },
-  };
-}
-
-function ontest(num) {
-  alert(num);
-}
+// 각 요소의 좌측 상단과 우측 하단 좌표를 가져와서 로컬스토리지에 저장
 
 function checkPos(cur_x, cur_y) {
   const fourBoxPoints = [...fourPoint.slice(-4)];
-
-  let result = null;
+  let isPosInDestination = false;
+  let ko_name = null;
+  let en_name = null;
   for (let i = 0; i < fourBoxPoints.length; i++) {
     if (
       fourBoxPoints[i]['topLeft']['x'] <= cur_x &&
@@ -425,19 +460,19 @@ function checkPos(cur_x, cur_y) {
       fourBoxPoints[i]['topLeft']['y'] <= cur_y &&
       cur_y <= fourBoxPoints[i]['bottomRight']['y']
     ) {
-      result = i + 1;
-
+      isPosInDestination = true;
+      ko_name = fourBoxPoints[i]['koreanName'];
+      en_name = fourBoxPoints[i]['name'];
       break;
     }
   }
 
-  if (result === null) {
-    return;
-  }
+  // FIXME:
 
-  ontest(result);
+  return [isPosInDestination, en_name, ko_name];
 }
 
+// 마우스 클릭 시, 해당 위치에 변경
 function clickEffect(e) {
   let d = document.createElement('div');
   d.className = 'clickEffect';
@@ -452,3 +487,37 @@ function clickEffect(e) {
   );
 }
 document.addEventListener('click', clickEffect);
+
+// 압장 확인 모달
+
+const modal = document.getElementById('myModal');
+
+function openModal(en_name, ko_Name) {
+  modal.style.display = 'block';
+
+  const modal_charactor = document.getElementById('modal_charactor');
+  console.log(modal_charactor);
+  modal_charactor.setAttribute('src', `./image/${en_name}_char.png`);
+  const modal_charactor_name = document.getElementById('modal_charactor_name');
+  console.log(modal_charactor_name);
+  modal_charactor_name.setAttribute('src', `./image/${en_name}.png`);
+
+  const showName = document.querySelector('.modal_bottom_text');
+  showName.textContent = `${ko_Name}님의 소개를 보시겠습니까?`;
+
+  document.querySelector('.modal_bottom_img_area').appendChild(modal_charactor);
+  document.querySelector('.modal_bottom_img_area').appendChild(modal_charactor_name);
+  //   document.querySelector('.why_modal_bottom').appendChild(showName);
+}
+
+function closeModal() {
+  modal.style.display = 'none';
+}
+
+// 모달 외부를 클릭하면 닫는 코드
+window.onclick = function (event) {
+  var modal = document.getElementById('myModal');
+  if (event.target == modal) {
+    modal.style.display = 'none';
+  }
+};

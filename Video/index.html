@@ -12,7 +12,7 @@
   <body onclick="checkPos()">
     <!-- background image -->
     <div class="background-video">
-      <img class="background-video__content" src="image/Snow-pixel.png" alt="" />
+      <img class="background-video__content" src="image/Snow-pixel-move.gif" alt="" />
     </div>
 
     <div class="container">
@@ -47,11 +47,11 @@
               <img class="charactor_name" src="image/park.png" alt="park" />
             </div>
             <div id="yoon" class="test test3">
-              <img class="charactor" src="image/kim_char.png" alt="" />
+              <img class="charactor" src="image/yoon_char.png" alt="" />
               <img class="charactor_name" src="image/yoon.png" alt="yoon" />
             </div>
             <div id="lee" class="test test4">
-              <img class="charactor" src="image/kim_char.png" alt="" />
+              <img class="charactor" src="image/lee_char.png" alt="" />
               <img class="charactor_name" src="image/lee.png" alt="이재아" />
             </div>
           </div>
@@ -69,6 +69,25 @@
         Use <span style="color: #ff0000"><b>Click</b></span> and <span style="color: #ff0000"><b>Send</b></span> Penguin to
         <span style="color: #ff0000">Charactor</span></span
       >
+    </div>
+
+    <div id="myModal" class="why_modal">
+      <div class="why_modal-content">
+        <div class="why_modal_top">
+          <div class="why_modal_title">MEMBER</div>
+        </div>
+        <div class="why_modal_bottom">
+          <div class="modal_bottom_img_area">
+            <img id="modal_charactor" class="charactor" src="" alt="" />
+            <img id="modal_charactor_name" class="charactor_name" src="" alt="kim" />
+          </div>
+          <div class="modal_bottom_text"></div>
+          <div class="modal_bottom_btn_area">
+            <button class="modal_bottom_btn_yes">yes</button>
+            <button class="modal_bottom_btn_no" onclick="closeModal()">no</button>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
