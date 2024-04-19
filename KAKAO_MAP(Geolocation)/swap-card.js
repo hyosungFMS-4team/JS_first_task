@@ -49,12 +49,13 @@ const taskDetails = [
   },
 ];
 
-const glide = document.querySelector('.glide__slides');
+const glideSlides = document.querySelector('.glide__slides');
 const tasks = JSON.parse(localStorage.getItem('tasks'));
 const length = tasks.length;
+let glide;
 
 window.addEventListener('load', function () {
-  new Glide('.glide', {
+  glide = new Glide('.glide', {
     type: 'carousel',
     focusAt: 'center',
     perView: 2,
@@ -126,7 +127,7 @@ function appendCarouselItem(idx, data) {
           </div> 
         </div>
       `;
-  glide.appendChild(item);
+  glideSlides.appendChild(item);
   // carousel.appendChild(item);
 }
 
@@ -291,6 +292,11 @@ async function getCarDirection(start, end) {
 }
 
 const glideArrows = document.querySelectorAll('.glide__arrows button');
+const flipBtn = document.getElementById('flipBtn');
+
+flipBtn.addEventListener('click', function () {
+  glide.enable();
+});
 
 glideArrows.forEach(arrow => {
   arrow.addEventListener('click', function (event) {
@@ -299,6 +305,11 @@ glideArrows.forEach(arrow => {
 });
 document.getElementById('map').addEventListener('click', function (event) {
   event.stopPropagation();
+  glide.disable();
+});
+
+document.getElementById('map').addEventListener('mousedown', function (event) {
+  glide.disable();
 });
 
 document.getElementById('dropdown').addEventListener('click', function (event) {
