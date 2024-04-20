@@ -3,124 +3,135 @@
   src: url('font/NeoDunggeunmoPro-Regular.ttf') format('truetype');
 }
 
-body {
-  height: 100dvh;
-  overflow: hidden;
-  background-image: url(image/pixel-city-thumb.jpg);
-  backdrop-filter: blur(3px);
-  user-select: none;
-}
-
-.container {
-  width: 100%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 98%;
-  font-family: 'PIXEL';
-}
-
 /* header */
 
-.header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 80%;
+header {
+  height: 15%;
+  margin-bottom: 10px;
+  margin-top: 20px;
 }
 
-.title {
+header > h1 {
   background: #2e2e2e;
-  padding: 15px;
+  padding: 3vh;
   color: #fff;
-  letter-spacing: 3px;
-  font-size: 24px;
+  letter-spacing: 0.5vh;
+  font-size: 4vh;
   box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
     inset 0px -5px #00000030;
 }
-
-/* main */
-.carousel-box {
-  flex: auto;
-  display: flex;
-  overflow: hidden;
-  max-width: 100%;
-  height: 76%;
-}
-
-.carousel-lists {
-  height: 100%;
-  padding: 2rem;
-}
-
-.swap-item {
-  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36;
-  animation: jumpAnimation 7s infinite;
-}
-
-.carousel-item {
-  height: 100%;
-}
-
-.swap-container {
-  height: 100%;
-}
-
-.item-title {
-  width: 100%;
-  font-size: 3rem;
-  line-height: 1;
-  --tw-text-opacity: 1;
-  color: rgb(3 7 18 / var(--tw-text-opacity));
-  text-align: left;
-  padding-top: 2rem;
-  height: 5rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
-.item-container {
-  height: 83.333333%;
-  justify-content: center;
-  display: flex;
-  width: 100dvh;
-}
-/* 
-.mapContainer {
-  width: 60%;
-  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36;
-}
-.mapDetail {
-  width: 40%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.mapDetail > p {
-  padding: 0 0 0 15px;
-  font-size: 30px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.2;
-  height: 12em;
-} */
 
 /* colors */
 .bg-blue {
   background: #1d4fd870;
 }
+
 .bg-red {
   background: #ff000070;
 }
+
 .bg-green {
   background: #3af39c70;
 }
 
-.area {
-  flex: 0.2;
+/* body */
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  opacity: 0.68;
+}
+
+.bg-video__content {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+#wrap {
+  font-family: 'PIXEL';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  user-select: none;
+
+  height: 100dvh;
+}
+
+.glide {
+  height: 80%;
+  overflow-y: hidden;
+}
+
+.carousel-item {
+  margin: 1rem;
+}
+
+.card-body {
+  width: 100%;
+  height: 70vh;
+  word-wrap: break-word;
+  border: 0;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
+    inset 0px -5px #00000030;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-body a {
+  font-size: 5vw;
+  color: silver;
+}
+
+.card-body.back {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-body.front {
+  position: absolute;
+}
+.card-title {
+  font-size: 3vw;
+  line-height: 1;
+}
+/* .carousel-arrow {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
+    scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  --tw-translate-y: -50%;
+  right: 1.25rem;
+  left: 1.25rem;
+  height: 6vh;
+} */
+
+.flip {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+.flip > div {
+  backface-visibility: hidden;
+}
+
+.flip .back {
+  transform: rotateX(180deg);
+}
+.flip.flipped {
+  transform: rotateX(180deg);
 }
 
 .custom-overlay {
@@ -141,7 +152,15 @@ body {
   border: none;
 }
 
-.dropdown > .btn,
+.dropdown > .btn {
+  background: #2e2e2e;
+  padding: 5px;
+  color: #fff;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
+    inset 0px -5px #00000030;
+  border-radius: 0;
+  margin: 0.5rem;
+}
 .dropdown > .dropdown-content {
   background: #2e2e2e;
   padding: 11px;
@@ -153,41 +172,49 @@ body {
   margin: 0.5rem;
 }
 
-/* footer  */
-
-.footer {
-  width: 100%;
-  padding-top: 20px;
-  flex: 0.7;
-}
-
-@keyframes 🚀 {
-  0% {
-    background-position-y: 0;
-  }
-  100% {
-    background-position-y: -48rem;
-  }
-}
-
-@keyframes jumpAnimation {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-#needle {
+#flipBtn {
   position: absolute;
-  z-index: 3;
-  height: 74%;
-  left: 9%;
+  background: #2e2e2e;
+  right: 10px;
+  padding: 5px;
+  bottom: 10px;
+  height: 3em;
+  width: 3em;
+  z-index: 100;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
+    inset 0px -5px #00000030;
 }
+
+#dropdown > ul {
+  height: 10em;
+  z-index: 100;
+}
+
+.glide_slide {
+  width: 100%;
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.glide__slide--active {
+  width: 100%;
+  filter: blur(0);
+  -webkit-filter: blur(0);
+}
+
+.glide__arrow {
+  border: none;
+}
+
+/* audio style */
 .audio_player {
+  /* 페이지 별로 설정 */
+  position: absolute;
+  top: 2%;
+  right: 2%;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -196,11 +223,7 @@ body {
   width: 13rem;
   height: 6rem;
 
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 3;
-  opacity: 0.7;
+  z-index: 100;
 
   color: black;
   background-color: beige;
@@ -219,7 +242,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 
   width: 100%;
   height: 100%;
@@ -229,29 +252,57 @@ body {
   justify-content: space-around;
 }
 
+.audio_player_lp {
+  position: relative;
+  margin: 1rem;
+  border: 1px solid black;
+  background-color: red;
+}
+
 .audio_player_image {
+  position: relative;
   display: flex;
 
   width: 4rem;
   height: 4rem;
 
-  margin: 1rem;
+  border: 1px solid black;
 
-  border: 2px solid silver;
-
+  margin: 0.3rem;
   overflow: hidden;
 }
 .audio_player:hover .audio_player_image {
   width: 6rem;
   height: 6rem;
 }
-.audio_player_title {
-  width: 80%;
 
+#audio_player_image_center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-0.4rem, -0.4rem);
+
+  background-color: red;
+  border: 1px solid black;
+
+  width: 0.8rem;
+  height: 0.8rem;
+}
+#audio_player_image_needle {
+  transform: rotate(8deg);
+  position: absolute;
+  width: 4rem;
+  height: 4.1rem;
+  top: -3%;
+  left: 49%;
+}
+
+.audio_player_title {
   text-align: center;
   font-weight: bolder;
   text-decoration: underline;
   font-size: 2rem;
+
   margin: 1rem;
 
   overflow: hidden;
@@ -310,7 +361,7 @@ body {
   }
   .audio_player:hover {
     height: 4rem;
-    width: 12rem;
+    width: 8rem;
   }
 
   .audio_player_image_and_title {
@@ -319,6 +370,10 @@ body {
   .audio_player:hover .audio_player_image_and_title {
     flex-direction: row;
     justify-content: center;
+  }
+
+  .audio_player_lp {
+    background-color: silver;
   }
 
   .audio_player_image {
@@ -334,8 +389,28 @@ body {
   .audio_player:hover .audio_player_image {
     width: 3rem;
     height: 3rem;
+  }
 
-    margin-right: 1rem;
+  #audio_player_image_center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-0.4rem, -0.4rem);
+
+    background-color: black;
+    border: 1px solid silver;
+
+    width: 0.8rem;
+    height: 0.8rem;
+  }
+
+  #audio_player_image_needle {
+    transform: rotate(20deg);
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    top: 0.1%;
+    left: 20%;
   }
 
   .audio_player_title {
