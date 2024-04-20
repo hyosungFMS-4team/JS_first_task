@@ -102,7 +102,9 @@ const glide_default = {
   kakao.maps.load(function () {
     appendMapCarouselItem();
   });
+
   flipCards();
+
   handleGlideDrag();
 })();
 
@@ -171,20 +173,33 @@ async function appendMapCarouselItem() {
 }
 
 function flipCards() {
-  const glideSlide = document.querySelectorAll('li');
   const flip = document.querySelectorAll('.flip');
+  const delta = 6;
+  //드래그와 클릭 구분
+  let startX;
+  let startY;
 
-  glideSlide.forEach(x => {
-    x.addEventListener('click', e => {
-      flip.forEach(a => {
-        a.addEventListener('click', e => {
-          if (a.classList.contains('flipped')) {
-            a.classList.remove('flipped');
+  //드래그와 클릭 구분
+  flip.forEach(card => {
+    card.addEventListener('mousedown', function (event) {
+      startX = event.pageX;
+      startY = event.pageY;
+    });
+
+    card.addEventListener('mouseup', function (event) {
+      const diffX = Math.abs(event.pageX - startX);
+      const diffY = Math.abs(event.pageY - startY);
+
+      if (diffX < delta && diffY < delta) {
+        // Click!
+        card.addEventListener('click', () => {
+          if (card.classList.contains('flipped')) {
+            card.classList.remove('flipped');
           } else {
-            a.classList.add('flipped');
+            card.classList.add('flipped');
           }
         });
-      });
+      }
     });
   });
 }
@@ -333,12 +348,10 @@ function handleGlideDrag() {
     if (id !== 'map' && id !== 'dropdown' && id !== 'mapSummary' && id !== 'mapUl' && id !== 'mapInfo') {
       // 마우스가 요소 위에 있을 때 glide.enable() 실행
       element.addEventListener('mouseenter', function () {
-        console.log('glide enabled');
         glide.enable();
       });
       // 요소를 클릭했을 때 glide.enable() 실행
       element.addEventListener('click', function () {
-        console.log('glide enabled');
         glide.enable();
       });
     }
