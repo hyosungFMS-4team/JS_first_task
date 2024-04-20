@@ -66,23 +66,10 @@ window.addEventListener('load', function () {
       after: 30,
     },
   }).mount();
-});
 
-//glide default class names
-const glide_default = {
-  direction: {
-    ltr: 'glide--ltr',
-    rtl: 'glide--rtl',
-  },
-  slider: 'glide--slider',
-  carousel: 'glide--carousel',
-  swipeable: 'glide--swipeable',
-  dragging: 'glide--dragging',
-  cloneSlide: 'glide__slide--clone',
-  activeNav: 'glide__bullet--active',
-  activeSlide: 'glide__slide--active',
-  disabledArrow: 'glide__arrow--disabled',
-};
+  handleGlideDrag();
+  flipCards();
+});
 
 (async () => {
   // Carousel task
@@ -102,10 +89,6 @@ const glide_default = {
   kakao.maps.load(function () {
     appendMapCarouselItem();
   });
-
-  flipCards();
-
-  handleGlideDrag();
 })();
 
 function appendCarouselItem(idx, data) {
@@ -130,7 +113,6 @@ function appendCarouselItem(idx, data) {
         </div>
       `;
   glideSlides.appendChild(item);
-  // carousel.appendChild(item);
 }
 
 async function appendMapCarouselItem() {
@@ -174,33 +156,39 @@ async function appendMapCarouselItem() {
 
 function flipCards() {
   const flip = document.querySelectorAll('.flip');
-  const delta = 6;
-  //드래그와 클릭 구분
-  let startX;
-  let startY;
 
-  //드래그와 클릭 구분
-  flip.forEach(card => {
-    card.addEventListener('mousedown', function (event) {
-      startX = event.pageX;
-      startY = event.pageY;
-    });
-
-    card.addEventListener('mouseup', function (event) {
-      const diffX = Math.abs(event.pageX - startX);
-      const diffY = Math.abs(event.pageY - startY);
-
-      if (diffX < delta && diffY < delta) {
-        // Click!
-        card.addEventListener('click', () => {
+  glideSlides.addEventListener('click', e => {
+    for (const slide of e.currentTarget.children) {
+      if (slide.classList.contains('glide__slide--active')) {
+        if (e.target.parentElement.parentElement.classList.contains('glide__slide--active')) {
+          let card = slide.children.item(0);
           if (card.classList.contains('flipped')) {
             card.classList.remove('flipped');
           } else {
             card.classList.add('flipped');
           }
-        });
+        }
       }
-    });
+    }
+  });
+  const delta = 6;
+  //드래그와 클릭 구분
+  let startX;
+  let startY;
+  //드래그와 클릭 구분
+  flip.forEach(card => {
+    // console.log(card.parentElement)
+    // card.addEventListener('mousedown', function (event) {
+    //   startX = event.pageX;
+    //   startY = event.pageY;
+    // });
+    // card.addEventListener('mouseup', function (event) {
+    //   const diffX = Math.abs(event.pageX - startX);
+    //   const diffY = Math.abs(event.pageY - startY);
+    //   if (diffX < delta && diffY < delta) {
+    //     // Click!
+    //   }
+    // });
   });
 }
 
