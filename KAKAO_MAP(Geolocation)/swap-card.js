@@ -317,8 +317,8 @@ function handleGlideDrag() {
     });
   });
 
-  mapElements.forEach(elementId => {
-    const element = document.getElementById(elementId);
+  mapElements.forEach(x => {
+    const element = document.getElementById(x);
     if (element) {
       element.addEventListener('click', handleMapClick);
       element.addEventListener('mousedown', handleMapMouseDown);
@@ -351,9 +351,9 @@ function handleGlideDrag() {
         glide.enable();
       });
       // 요소를 클릭했을 때 glide.enable() 실행
-      element.addEventListener('click', function () {
-        glide.enable();
-      });
+      // element.addEventListener('click', function () {
+      //   glide.enable();
+      // });
     }
   });
 }
