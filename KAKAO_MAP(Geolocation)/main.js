@@ -216,41 +216,38 @@ function appendCarouselItem(idx, data) {
 }
 
 function flipCards() {
-  const flip = document.querySelectorAll('.flip');
+  //drag & click 구분 이벤트
+  let isDragging = false;
+  glideSlides.addEventListener('mousedown', () => {
+    isDragging = false;
+  });
 
-  glideSlides.addEventListener('click', e => {
-    for (const slide of e.currentTarget.children) {
-      if (slide.classList.contains('glide__slide--active')) {
-        if (e.target.parentElement.parentElement.classList.contains('glide__slide--active')) {
-          let card = slide.children.item(0);
-          if (card.classList.contains('flipped')) {
-            card.classList.remove('flipped');
-          } else {
-            card.classList.add('flipped');
+  glideSlides.addEventListener('mousemove', () => {
+    isDragging = true;
+  });
+
+  glideSlides.addEventListener('mouseup', e => {
+    if (!isDragging) {
+      for (const slide of e.currentTarget.children) {
+        if (slide.classList.contains('glide__slide--active')) {
+          if (e.target.parentElement.parentElement.classList.contains('glide__slide--active')) {
+            let card = slide.children.item(0);
+            if (card.classList.contains('flipped')) {
+              card.classList.remove('flipped');
+            } else {
+              card.classList.add('flipped');
+            }
           }
         }
       }
     }
   });
-  const delta = 6;
-  //드래그와 클릭 구분
-  let startX;
-  let startY;
-  //드래그와 클릭 구분
-  flip.forEach(card => {
-    // console.log(card.parentElement)
-    // card.addEventListener('mousedown', function (event) {
-    //   startX = event.pageX;
-    //   startY = event.pageY;
-    // });
-    // card.addEventListener('mouseup', function (event) {
-    //   const diffX = Math.abs(event.pageX - startX);
-    //   const diffY = Math.abs(event.pageY - startY);
-    //   if (diffX < delta && diffY < delta) {
-    //     // Click!
-    //   }
-    // });
-  });
+
+  // glideSlides.addEventListener('click', e => {
+  //   console.log(isDragging);
+  //   if (!isDragging) {
+  //   }
+  // });
 }
 
 function makeMarker(lat, lng) {
