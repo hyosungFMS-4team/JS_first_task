@@ -1,134 +1,216 @@
-const carousels = document.getElementById('carousel-lists');
-let id = 1;
-let length = 0;
-// MAIN
-(async () => {
-  // Carousel task
-  let tasks = localStorage.getItem('tasks');
-
-  tasks = JSON.parse(tasks);
-  length = tasks.length;
-  tasks.forEach(task => appendTaskCarouselItem(task, 'bg-green', 'bg-blue'));
-  // Carousel map
-  appendMapCarouselItem('나와의 거리', 'bg-green', 'bg-blue');
-})();
-
-async function appendMapCarouselItem(title, swapOnColor, swapOffColor) {
-  const swapOffContainer = `
+const mapHtml = `
   <div id="map" style="width: 100%; height: 100%"></div>
-  <div id="dropdown" class="dropdown dropdown-bottom dropdown-end">
-    <div tabindex="0" role="button" class="btn">정보보기</div>
-    <div tabindex="0" class="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-primary text-primary-content">
-      <div class="card-body">
-        <h3 class="card-title">Card title!</h3>
-        <p>you can use any element as a dropdown.</p>
-      </div>
-    </div>
-  </div>`;
+  <details class="dropdown dropdown-bottom dropdown-end" id="dropdown">
+    <summary class="m-1 btn" id="mapSummary">정보 보기</summary>
+    <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52" id="mapUl">
+      <li id="mapInfo"></li>
+    </ul>
+  </details>
+  <button id="flipBtn">flip</button>
+`;
+const memberDetails = {
+  park: [
+    {
+      title: 'PARK',
+      content: mapHtml,
+    },
+    {
+      title: 'PARK',
+      content: 'content2',
+    },
+    {
+      title: 'title3',
+      content: 'content3',
+    },
+    {
+      title: 'title4',
+      content: 'content4',
+    },
+    {
+      title: 'title5',
+      content: 'content5',
+    },
+    {
+      title: 'title6',
+      content: 'content6',
+    },
+    {
+      title: 'title7',
+      content: 'content7',
+    },
+    {
+      title: 'title8',
+      content: 'content8',
+    },
+    {
+      title: 'title9',
+      content: 'content9',
+    },
+    {
+      title: 'title10',
+      content: 'content10',
+    },
+  ],
+  kim: [
+    {
+      title: 'YOON',
+      content: mapHtml,
+    },
+    {
+      title: 'YOON',
+      content: 'content2',
+    },
+    {
+      title: 'title3',
+      content: 'content3',
+    },
+    {
+      title: 'title4',
+      content: 'content4',
+    },
+    {
+      title: 'title5',
+      content: 'content5',
+    },
+    {
+      title: 'title6',
+      content: 'content6',
+    },
+    {
+      title: 'title7',
+      content: 'content7',
+    },
+    {
+      title: 'title8',
+      content: 'content8',
+    },
+    {
+      title: 'title9',
+      content: 'content9',
+    },
+    {
+      title: 'title10',
+      content: 'content10',
+    },
+  ],
+};
 
-  const swapOnContainer = `
-        <div class="w-1/2 flex items-center justify-center">
-            <div class="text-[300px] text-gray-950">O</div>
+/* ***************로컬 스토리지****************** */
+const enname = localStorage.getItem('en_name').replaceAll('"', '');
+const taskDetails = memberDetails[enname];
+const tasks = JSON.parse(localStorage.getItem(`${enname}_answerSheet`));
+/* ******************************************** */
+const glideSlides = document.querySelector('.glide__slides');
+// const tasks = JSON.parse(localStorage.getItem('tasks'));
+const length = tasks.length;
+let glide;
+
+window.addEventListener('load', function () {
+  glide = new Glide('.glide', {
+    type: 'carousel',
+    focusAt: 'center',
+    perView: 2,
+    gap: 40,
+    keyboard: true,
+    peek: {
+      before: 30,
+      after: 30,
+    },
+  }).mount();
+
+  glide.on('move.after', x => {
+    console.log(glide.index);
+  });
+  this.document.querySelector('h1').innerHTML =
+    `<span style="color: blue">O</span>
+  <span style="color: red">X</span> QUIZ ` + (enname === 'kim' ? '김기정' : enname === 'yoon' ? '윤동훈' : enname === 'park' ? '박민석' : '이재아');
+  flipCards();
+
+  handleGlideDrag();
+});
+
+// Carousel task
+tasks.forEach((task, idx) =>
+  appendCarouselItem(idx, {
+    front: {
+      title: task.content,
+      color: 'bg-blue',
+    },
+    back: {
+      title: taskDetails[idx].title,
+      content: taskDetails[idx].content,
+      color: 'bg-red',
+    },
+  })
+);
+kakao.maps.load(function () {
+  const kakaoMapScript = document.createElement('script');
+  kakaoMapScript.src = 'kakao-map.js';
+  document.body.appendChild(kakaoMapScript);
+});
+
+function appendCarouselItem(idx, data) {
+  let item = document.createElement('li');
+  item.setAttribute('class', 'glide_slide');
+  item.innerHTML = `
+        <div class="flip">
+          <div id="${idx}" class="card-body front ${data.front.color}">
+          ${data.front.color ? `<div class="card-title">${data.front.title}</div>` : data.front.title}
+            <div class="glide__arrows" data-glide-el="controls">
+              <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><</button>
+              <button class="glide__arrow glide__arrow--right" data-glide-dir=">">></button>
+            </div>
+          </div>
+          <div id="${idx}" class="card-body back ${data.back.color}">
+              ${data.back.content}
+            <div class="glide__arrows" data-glide-el="controls">
+              <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><</button>
+              <button class="glide__arrow glide__arrow--right" data-glide-dir=">">></button>
+            </div>
+          </div> 
         </div>
-        <div class="w-1/2 flex justify-center items-center">
-            <div id="mapInfo" class="text-3xl text-gray-950 pr-10 pl-10 pb-10"></div>
-        </div>`;
-  length++;
-  appendCarouselItem(title, swapOffContainer, swapOffColor, swapOnContainer, swapOnColor);
-
-  // 좌표
-  const curCoord = await getCoords();
-  const destCoord = {
-    latitude: 37.2526,
-    longtitude: 127.0723,
-  };
-  const coords = [curCoord, destCoord];
-
-  // 지도 생성
-  const mapContainer = document.getElementById('map');
-  const map = loadKakaoMap(mapContainer, 37.2526, 127.0723);
-
-  // 좌표 마커로 지도에 추가
-  makeMarkersToMap(map, coords);
-
-  // 경로 생성 및 지도에 추가
-  const carDirection = await getCarDirection(curCoord, destCoord);
-  console.log(carDirection);
-  makePathLineToMap(map, carDirection);
-
-  const directionSummary = carDirection.routes[0].summary;
-  const directionFare = directionSummary.fare;
-
-  const mapInfo = document.getElementById('mapInfo');
-  mapInfo.innerHTML = `
-        TAXI: ${directionFare.taxi} <br>
-        TOLL: ${directionFare.toll} <br>
-
-        DIST: ${directionSummary.distance}
-    `;
+      `;
+  glideSlides.appendChild(item);
+  const backContents = document.querySelector('.card-body.back');
+  backContents.style.padding = '0';
+  backContents.style.gap = '0';
 }
 
-function appendTaskCarouselItem(task, swapOnColor, swapOffColor) {
-  const swapOffContainer = `
-        <div class="w-1/2 flex items-center justify-center">
-            <div class="text-[300px] text-gray-950">${task.status === 'o_section' ? 'O' : 'X'}</div>
-        </div>
-        <div class="w-1/2 flex justify-center items-center">
-            <div class="text-3xl text-gray-950 pr-10 pl-10 pb-10">
-                ${task.answer}
-            </div>
-        </div>`;
+function flipCards() {
+  //drag & click 구분 이벤트
+  let isDragging = false;
+  glideSlides.addEventListener('mousedown', () => {
+    isDragging = false;
+  });
 
-  const swapOnContainer = `
-        <div class="w-1/2 flex items-center justify-center">
-            <div class="text-[300px] text-gray-950">O</div>
-        </div>
-        <div class="w-1/2 flex justify-center items-center">
-            <div class="text-3xl text-gray-950 pr-10 pl-10 pb-10">
-                ${task.answer}
-            </div>
-        </div>`;
+  glideSlides.addEventListener('mousemove', () => {
+    isDragging = true;
+  });
 
-  appendCarouselItem(`${id}. ${task.content}`, swapOffContainer, swapOffColor, swapOnContainer, swapOnColor);
+  glideSlides.addEventListener('mouseup', e => {
+    if (!isDragging) {
+      for (const slide of e.currentTarget.children) {
+        if (slide.classList.contains('glide__slide--active')) {
+          if (e.target.parentElement.parentElement.classList.contains('glide__slide--active')) {
+            let card = slide.children.item(0);
+            if (card.classList.contains('flipped')) {
+              card.classList.remove('flipped');
+            } else {
+              card.classList.add('flipped');
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // glideSlides.addEventListener('click', e => {
+  //   console.log(isDragging);
+  //   if (!isDragging) {
+  //   }
+  // });
 }
 
-function appendCarouselItem(title, swapOffContainer, swapOffColor, swapOnContainer, swapOnColor) {
-  const carouselItem = document.createElement('label');
-  carouselItem.setAttribute('class', 'swap swap-flip carousel-item');
-  console.log(id, length);
-  carouselItem.innerHTML = `
-        <input type="checkbox" />
-        <div class="swap-off swap-container">
-            <div id="${id}" class="swap-item flex flex-col relative ${swapOffColor}">
-                <div class="item-title">${title}</div>
-                <div class="item-container">${swapOffContainer}</div>
-            </div>
-            <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                <a href="#${id - 1 !== 0 ? id - 1 : length}" class="bg-transparent border-none text-7xl">❮</a>
-                <a href="#${id < length ? id + 1 : 1}" class="bg-transparent border-none text-7xl">❯</a>
-            </div>
-        </div>
-        <div class="swap-on swap-container">
-            <div id="${id}" class="swap-item flex flex-col relative ${swapOnColor}">
-                <div class="item-title">${title}</div>
-                <div class="item-container">${swapOnContainer}</div>
-            </div>
-            <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                <a href="#${id - 1 !== 0 ? id - 1 : length}" class="bg-transparent border-none text-7xl">❮</a>
-                <a href="#${id < length ? id + 1 : 1}" class="bg-transparent border-none text-7xl">❯</a>
-            </div>
-        </div>
-    `;
-  carousels.appendChild(carouselItem);
-  id++;
-}
-
-function loadKakaoMap(mapContainer, lat, lng) {
-  const mapOptions = {
-    center: new kakao.maps.LatLng(lat, lng),
-  };
-  return new kakao.maps.Map(mapContainer, mapOptions);
-}
 function makeMarker(lat, lng) {
   const markerPos = new kakao.maps.LatLng(lat, lng);
   const marker = new kakao.maps.Marker({
@@ -147,8 +229,8 @@ function makeMarkersToMap(map, coords) {
   const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
   let content = `<div>
-       <span class="custom-overlay">김기정</span>
-    </div>`;
+         <span class="custom-overlay">김기정</span>
+      </div>`;
   for (const coord of coords) {
     const point = new kakao.maps.LatLng(coord.latitude, coord.longtitude);
     const marker = new kakao.maps.Marker({ position: point, image: markerImage });
@@ -199,6 +281,7 @@ async function getCoords() {
     latitude: pos.coords.latitude,
   };
 }
+
 async function getCarDirection(start, end) {
   const url = 'https://apis-navi.kakaomobility.com/v1/directions';
   const REST_API_KEY = 'e639f9820bd9dfd6a0627ecb6b06f5f3';
@@ -216,7 +299,6 @@ async function getCarDirection(start, end) {
   };
 
   const requestUrl = `${url}?${queryParams}`;
-
   try {
     const response = await fetch(requestUrl, {
       method: 'GET',
@@ -231,10 +313,96 @@ async function getCarDirection(start, end) {
   }
 }
 
-const test = document.getElementById('map').addEventListener('click', function (event) {
-  event.preventDefault();
-});
+function handleGlideDrag() {
+  const glideArrows = document.querySelectorAll('.glide__arrows button');
+  const mapElements = ['map', 'mapSummary', 'mapUl', 'mapInfo'];
+  const allElements = document.querySelectorAll('*');
 
-document.getElementById('infoBtn').addEventListener('click', function (event) {
-  event.preventDefault();
-});
+  glideArrows.forEach(arrow => {
+    arrow.addEventListener('click', function (event) {
+      event.stopPropagation(); // 이벤트 전파 중지
+    });
+  });
+
+  mapElements.forEach(x => {
+    const element = document.getElementById(x);
+    if (element) {
+      element.addEventListener('click', handleMapClick);
+      element.addEventListener('mousedown', handleMapMouseDown);
+    }
+  });
+
+  document.getElementById('dropdown').addEventListener('click', function (event) {
+    event.stopPropagation();
+  });
+
+  function handleMapClick(event) {
+    event.stopPropagation();
+    glide.disable();
+  }
+
+  function handleMapMouseDown(event) {
+    glide.disable();
+  }
+
+  document.getElementById('dropdown').addEventListener('click', function (event) {
+    event.stopPropagation();
+  });
+
+  document.getElementById('flipBtn').addEventListener('click', function (event) {
+    glide.enable();
+  });
+  // map과 dropdown 요소 제외한 모든 요소에 대해 이벤트 리스너 추가
+  allElements.forEach(element => {
+    let id = element.id;
+    if (id !== 'map' && id !== 'dropdown' && id !== 'mapSummary' && id !== 'mapUl' && id !== 'mapInfo') {
+      // 마우스가 요소 위에 있을 때 glide.enable() 실행
+      element.addEventListener('mouseenter', function () {
+        glide.enable();
+      });
+      // 요소를 클릭했을 때 glide.enable() 실행
+      // element.addEventListener('click', function () {
+      //   glide.enable();
+      // });
+    }
+  });
+}
+
+//modal
+
+const modal = document.getElementById('myModal');
+const boardModal = document.getElementById('myBoardModal');
+
+function openModal(en_name, ko_Name) {
+  if (en_name !== 'board') {
+    modal.style.display = 'block';
+
+    const yesBtn = document.querySelector('.modal_bottom_btn_yes');
+    yesBtn.addEventListener('click', () => {
+      goToOxQuizWithParameter(en_name);
+    });
+
+    document.querySelector('.modal_bottom_img_area').appendChild(modal_charactor);
+    document.querySelector('.modal_bottom_img_area').appendChild(modal_charactor_name);
+  } else {
+    boardModal.style.display = 'block';
+  }
+}
+
+function closeModal() {
+  modal.style.display = 'none';
+}
+
+// 모달 외부를 클릭하면 닫는 코드
+window.onclick = function (event) {
+  let modal = document.getElementById('myModal');
+  let boardModal = document.getElementById('myBoardModal');
+
+  if (event.target == modal) {
+    modal.style.display = 'none';
+  }
+
+  if (event.target == boardModal) {
+    boardModal.style.display = 'none';
+  }
+};
