@@ -101,7 +101,6 @@ const taskDetails = memberDetails[enname];
 const tasks = JSON.parse(localStorage.getItem(`${enname}_answerSheet`));
 /* ******************************************** */
 const glideSlides = document.querySelector('.glide__slides');
-// const tasks = JSON.parse(localStorage.getItem('tasks'));
 const length = tasks.length;
 let glide;
 
@@ -121,9 +120,10 @@ window.addEventListener('load', function () {
   this.document.querySelector('h1').innerHTML =
     `<span style="color: blue">O</span>
   <span style="color: red">X</span> QUIZ ` + (enname === 'kim' ? '김기정' : enname === 'yoon' ? '윤동훈' : enname === 'park' ? '박민석' : '이재아');
-  flipCards();
 
+  flipCards();
   handleGlideDrag();
+
   glide.on('run.after', e => {
     const originalSlides = document.querySelectorAll('.glide_slide:not(.glide__slide--clone)');
     originalSlides.forEach(originalSlide => {
@@ -138,6 +138,19 @@ window.addEventListener('load', function () {
           cloneSlide.forEach(x => {
             if (x.children.item(0).getAttribute('id') === slideId) {
               x.classList.add('flipped');
+            }
+          });
+        }
+      } else {
+        let flippedSlide = originalSlide.querySelector('.flip');
+        // Glide 클론 슬라이드에서도 동일한 클래스를 추가
+        const slideId = flippedSlide.children[0].getAttribute('id');
+        const cloneSlide = document.querySelectorAll(`.glide__slide--clone .flipped`);
+
+        if (cloneSlide) {
+          cloneSlide.forEach(x => {
+            if (x.children.item(0).getAttribute('id') === slideId) {
+              x.classList.remove('flipped');
             }
           });
         }
