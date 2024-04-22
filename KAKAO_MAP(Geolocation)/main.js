@@ -118,15 +118,32 @@ window.addEventListener('load', function () {
     },
   }).mount();
 
-  glide.on('move.after', x => {
-    console.log(glide.index);
-  });
   this.document.querySelector('h1').innerHTML =
     `<span style="color: blue">O</span>
   <span style="color: red">X</span> QUIZ ` + (enname === 'kim' ? '김기정' : enname === 'yoon' ? '윤동훈' : enname === 'park' ? '박민석' : '이재아');
   flipCards();
 
   handleGlideDrag();
+  glide.on('run.after', e => {
+    const originalSlides = document.querySelectorAll('.glide_slide:not(.glide__slide--clone)');
+    originalSlides.forEach(originalSlide => {
+      // 원래 슬라이드의 자식 요소 중 flipped 클래스가 있는지 확인
+      if (originalSlide.querySelector('.flip').classList.contains('flipped')) {
+        let flippedSlide = originalSlide.querySelector('.flip');
+        // Glide 클론 슬라이드에서도 동일한 클래스를 추가
+        const slideId = flippedSlide.children[0].getAttribute('id');
+        const cloneSlide = document.querySelectorAll(`.glide__slide--clone .flip`);
+
+        if (cloneSlide) {
+          cloneSlide.forEach(x => {
+            if (x.children.item(0).getAttribute('id') === slideId) {
+              x.classList.add('flipped');
+            }
+          });
+        }
+      }
+    });
+  });
 });
 
 // Carousel task
@@ -191,8 +208,12 @@ function flipCards() {
     if (!isDragging) {
       for (const slide of e.currentTarget.children) {
         if (slide.classList.contains('glide__slide--active')) {
-          if (e.target.parentElement.parentElement.classList.contains('glide__slide--active')) {
+          if (
+            e.target.parentElement.parentElement.classList.contains('glide__slide--active') ||
+            (e.target.classList.contains('card-title') && e.target.parentElement.parentElement.parentElement.classList.contains('glide__slide--active'))
+          ) {
             let card = slide.children.item(0);
+
             if (card.classList.contains('flipped')) {
               card.classList.remove('flipped');
             } else {
