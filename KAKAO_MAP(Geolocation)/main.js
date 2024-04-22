@@ -51,7 +51,7 @@ const memberDetails = {
       content: 'content10',
     },
   ],
-  kim: [
+  yoon: [
     {
       title: 'YOON',
       content: mapHtml,
