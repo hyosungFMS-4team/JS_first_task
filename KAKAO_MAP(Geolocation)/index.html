@@ -72,7 +72,7 @@
         </div>
       </header>
 
-      <!-- <div id="carousel" class="carousel carousel-center"></div> -->
+      <!-- carousel -->
       <div class="glide">
         <div class="glide__track" data-glide-el="track">
           <ul class="glide__slides"></ul>
@@ -80,6 +80,21 @@
       </div>
     </div>
 
+    <!-- modal -->
+    <div id="myModal" class="why_modal">
+      <div class="why_modal-content">
+        <div class="why_modal_top">
+          <div class="why_modal_title">당신의 점수</div>
+        </div>
+        <div class="why_modal_bottom">
+          <div class="modal_bottom_text"></div>
+          <div class="modal_bottom_btn_area">
+            <button class="modal_bottom_btn_yes">yes</button>
+            <button class="modal_bottom_btn_no" onclick="closeModal()">no</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8ac7e2077f27a4c6f9b51ee256d5dd18&autoload=false"></script>
   </body>
 </html>

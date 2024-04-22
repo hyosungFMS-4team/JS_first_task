@@ -94,49 +94,7 @@ const memberDetails = {
     },
   ],
 };
-// 개인별 문제 후면에 띄울 데이터
-// const taskDetails = [
-//   {
-//     title: 'title1',
-//     content: mapHtml,
-//   },
-//   {
-//     title: 'title2',
-//     content: '<img src="./image/민증샘플.png" alt="123" />',
-//   },
-//   {
-//     title: 'title3',
-//     content: 'content3',
-//   },
-//   {
-//     title: 'title4',
-//     content: 'content4',
-//   },
-//   {
-//     title: 'title5',
-//     content: 'content5',
-//   },
-//   {
-//     title: 'title6',
-//     content: 'content6',
-//   },
-//   {
-//     title: 'title7',
-//     content: 'content7',
-//   },
-//   {
-//     title: 'title8',
-//     content: 'content8',
-//   },
-//   {
-//     title: 'title9',
-//     content: 'content9',
-//   },
-//   {
-//     title: 'title10',
-//     content: 'content10',
-//   },
-// ];
+
 /* ***************로컬 스토리지****************** */
 const enname = localStorage.getItem('en_name').replaceAll('"', '');
 const taskDetails = memberDetails[enname];
@@ -160,6 +118,9 @@ window.addEventListener('load', function () {
     },
   }).mount();
 
+  glide.on('move.after', x => {
+    console.log(glide.index);
+  });
   this.document.querySelector('h1').innerHTML =
     `<span style="color: blue">O</span>
   <span style="color: red">X</span> QUIZ ` + (enname === 'kim' ? '김기정' : enname === 'yoon' ? '윤동훈' : enname === 'park' ? '박민석' : '이재아');
@@ -406,3 +367,42 @@ function handleGlideDrag() {
     }
   });
 }
+
+//modal
+
+const modal = document.getElementById('myModal');
+const boardModal = document.getElementById('myBoardModal');
+
+function openModal(en_name, ko_Name) {
+  if (en_name !== 'board') {
+    modal.style.display = 'block';
+
+    const yesBtn = document.querySelector('.modal_bottom_btn_yes');
+    yesBtn.addEventListener('click', () => {
+      goToOxQuizWithParameter(en_name);
+    });
+
+    document.querySelector('.modal_bottom_img_area').appendChild(modal_charactor);
+    document.querySelector('.modal_bottom_img_area').appendChild(modal_charactor_name);
+  } else {
+    boardModal.style.display = 'block';
+  }
+}
+
+function closeModal() {
+  modal.style.display = 'none';
+}
+
+// 모달 외부를 클릭하면 닫는 코드
+window.onclick = function (event) {
+  let modal = document.getElementById('myModal');
+  let boardModal = document.getElementById('myBoardModal');
+
+  if (event.target == modal) {
+    modal.style.display = 'none';
+  }
+
+  if (event.target == boardModal) {
+    boardModal.style.display = 'none';
+  }
+};

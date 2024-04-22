@@ -2,7 +2,44 @@
   font-family: 'PIXEL';
   src: url('font/NeoDunggeunmoPro-Regular.ttf') format('truetype');
 }
+#map {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
+    inset 0px -5px #00000030;
+}
 
+.map-animation-marker {
+  width: 5vw;
+  height: 5vh;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.map-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 50%;
+  height: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+
+  font-size: 2rem;
+  text-align: center;
+
+  background-color: silver;
+  opacity: 0.7;
+  border: 0;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
+    inset 0px -5px #00000030;
+}
 /* header */
 
 header {
@@ -133,7 +170,44 @@ header > h1 {
 .flip.flipped {
   transform: rotateX(180deg);
 }
+#map {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
+    inset 0px -5px #00000030;
+}
 
+.map-animation-marker {
+  width: 5vw;
+  height: 5vh;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.map-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 50%;
+  height: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+
+  font-size: 2rem;
+  text-align: center;
+
+  background-color: silver;
+  opacity: 0.7;
+  border: 0;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff1f,
+    inset 0px -5px #00000030;
+}
 .custom-overlay {
   background: #2e2e2e;
   padding: 11px;
@@ -231,6 +305,187 @@ header > h1 {
   transition: height 0.5s;
   overflow: hidden;
 }
+
+/* MODAL */
+
+.why_modal {
+  display: none;
+  font-family: 'PIXEL';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow: auto;
+}
+
+.why_modal-content {
+  background-color: #fefefe;
+  /* padding: 20px; */
+  border: 0;
+  width: 40%;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+}
+
+.why_modal_top {
+  background-color: #1d4ed8;
+  padding: 4px 12px;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.why_modal_bottom {
+  padding: 5%;
+  font-size: x-large;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal_bottom_text {
+  text-align: center;
+  margin-bottom: 2%;
+}
+
+.why_modal_title {
+  padding: 6px 12px;
+  font-size: x-large;
+  letter-spacing: 5px;
+  color: #ffffff;
+}
+
+/* 모달 닫기 버튼 스타일 */
+.why_close {
+  color: #aaa;
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.why_close:hover,
+.why_close:focus {
+  color: #ff0000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal_bottom_img_area {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-bottom: 2%;
+}
+
+.modal_bottom_btn_area {
+  display: flex;
+  justify-content: center;
+}
+
+.modal_bottom_btn_yes {
+  width: 30%;
+  background-color: #0077cc;
+  color: black;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36;
+  margin-right: 2%;
+  transition: all 200ms ease-in;
+}
+
+.modal_bottom_btn_no {
+  width: 30%;
+  background-color: #ff0000;
+  color: black;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36;
+  margin-left: 2%;
+  transition: all 200ms ease-in;
+}
+
+.modal_bottom_btn_yes:hover {
+  color: #fcfcfc;
+  cursor: pointer;
+}
+
+.modal_bottom_btn_no:hover {
+  color: #fcfcfc;
+  cursor: pointer;
+}
+
+/* board modal */
+
+.modal_bottom_btn_board {
+  flex: 4.75;
+  color: black;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36;
+  transition: all 200ms ease-in;
+  padding: 15% 5%;
+  background: rgba(175, 175, 175, 1);
+  color: rgba(100, 100, 100, 1);
+  letter-spacing: 3px;
+  font-size: x-large;
+}
+
+.modal_divider {
+  flex: 0.5;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0% 2%;
+}
+
+.modal_divider_line {
+  width: 15%;
+  height: 100%;
+  background-color: #808080;
+}
+
+.modal_bottom_btn_signup {
+  flex: 4.75;
+  color: black;
+  box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36;
+  transition: all 200ms ease-in;
+  padding: 15% 5%;
+  background: rgba(175, 175, 175, 1);
+  color: rgba(100, 100, 100, 1);
+  letter-spacing: 3px;
+  font-size: x-large;
+}
+
+.modal_bottom_btn_board:hover,
+.modal_bottom_btn_signup:hover {
+  background-color: rgb(217, 60, 71);
+  color: #fcfcfc;
+}
+
+/* .modal_bottom_btn_board:active,
+.modal_bottom_btn_signup:active {
+
+  background-color: rgb(217, 60, 71);
+  color: #fcfcfc;
+} */
+
+@keyframes 🚀 {
+  0% {
+    background-position-y: 0;
+  }
+  100% {
+    background-position-y: -48rem;
+  }
+}
+
+/* audio */
 .audio_player * {
   font-family: 'PIXEL';
 }
