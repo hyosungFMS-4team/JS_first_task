@@ -124,36 +124,14 @@ window.addEventListener('load', function () {
   flipCards();
   handleGlideDrag();
 
-  glide.on('run.after', e => {
-    const originalSlides = document.querySelectorAll('.glide_slide:not(.glide__slide--clone)');
+  glide.on('run', e => {
+    const originalSlides = document.querySelectorAll('.glide_slide');
     originalSlides.forEach(originalSlide => {
       // 원래 슬라이드의 자식 요소 중 flipped 클래스가 있는지 확인
       if (originalSlide.querySelector('.flip').classList.contains('flipped')) {
         let flippedSlide = originalSlide.querySelector('.flip');
-        // Glide 클론 슬라이드에서도 동일한 클래스를 추가
-        const slideId = flippedSlide.children[0].getAttribute('id');
-        const cloneSlide = document.querySelectorAll(`.glide__slide--clone .flip`);
-
-        if (cloneSlide) {
-          cloneSlide.forEach(x => {
-            if (x.children.item(0).getAttribute('id') === slideId) {
-              x.classList.add('flipped');
-            }
-          });
-        }
-      } else {
-        let flippedSlide = originalSlide.querySelector('.flip');
-        // Glide 클론 슬라이드에서도 동일한 클래스를 추가
-        const slideId = flippedSlide.children[0].getAttribute('id');
-        const cloneSlide = document.querySelectorAll(`.glide__slide--clone .flipped`);
-
-        if (cloneSlide) {
-          cloneSlide.forEach(x => {
-            if (x.children.item(0).getAttribute('id') === slideId) {
-              x.classList.remove('flipped');
-            }
-          });
-        }
+        //fliped 제거
+        flippedSlide.classList.remove('flipped');
       }
     });
   });
@@ -186,19 +164,16 @@ function appendCarouselItem(idx, data) {
         <div class="flip">
           <div id="${idx}" class="card-body front ${data.front.color}">
           ${data.front.color ? `<div class="card-title">${data.front.title}</div>` : data.front.title}
-            <div class="glide__arrows" data-glide-el="controls">
-              <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><</button>
-              <button class="glide__arrow glide__arrow--right" data-glide-dir=">">></button>
-            </div>
+
           </div>
           <div id="${idx}" class="card-body back ${data.back.color}">
               ${data.back.content}
-            <div class="glide__arrows" data-glide-el="controls">
+          </div> 
+        </div>
+        <div class="glide__arrows" data-glide-el="controls">
               <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><</button>
               <button class="glide__arrow glide__arrow--right" data-glide-dir=">">></button>
             </div>
-          </div> 
-        </div>
       `;
   glideSlides.appendChild(item);
   const backContents = document.querySelector('.card-body.back');
@@ -237,12 +212,6 @@ function flipCards() {
       }
     }
   });
-
-  // glideSlides.addEventListener('click', e => {
-  //   console.log(isDragging);
-  //   if (!isDragging) {
-  //   }
-  // });
 }
 
 function makeMarker(lat, lng) {
